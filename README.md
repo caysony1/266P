@@ -6,9 +6,10 @@ Please do not use this in a real-life environment!
 
 Instructions to run project. Order matters!
 
-1. Run the server side project using the command:
+1. Run the server side project using the command at the root directory:
 
-    `some python script that will evnetually run the server side` 
+    Windows: `python3 server\main.py`\
+    MacOS/Linux: `python3 server/main.py`
 
 2. Run the client side project using the command:
 
