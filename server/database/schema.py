@@ -6,40 +6,43 @@ def create_db():
 
     # create the necessary tables for the bank application
     cursor.execute('''
-        CREATE TABLE User (
-            id INTEGER PRIMARY KEY NOT NULL UNIQUE AUTOINCREMENT,
+        CREATE TABLE IF NOT EXISTS User (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
             first_name TEXT NOT NULL,
             last_name TEXT NOT NULL
-        )
+        );
     ''')
 
     cursor.execute('''
-        CREATE TABLE AccountType (
-            id INTEGER PRIMARY KEY NOT NULL UNIQUE AUTOINCREMENT,
-            name TEXT NOT NULL
-        )
+        CREATE TABLE IF NOT EXISTS AccountType (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL UNIQUE
+        );
     ''')
 
     cursor.execute('''
-        CREATE TABLE Account (
-            id INTEGER PRIMARY KEY NOT NULL UNIQUE AUTOINCREMENT,
+        CREATE TABLE IF NOT EXISTS Account (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
             account_type_id INTEGER NOT NULL,
             balance INTEGER NOT NULL,
-            FOREIGN_KEY (account_type_id) REFERENCES AccountType(id),
-            FOREIGN_KEY (user_id) REFERENCES User(id)
-        )
+            FOREIGN KEY (account_type_id) REFERENCES AccountType(id),
+            FOREIGN KEY (user_id) REFERENCES User(id)
+        );
     ''')
 
     # insert initial records into reference tables
-    account_types = [
-        ('Checking'),
-        ('Savings')
+    # have to end with a comma to ensure it is a tuple, not a string
+    account_types_records = [
+        ('Checking',), 
+        ('Savings',)
     ]
 
-    cursor.executemany('''
-        INSERT INTO AccountType (name)
-        VALUES (?)
-    ''', account_types)
+    cursor.executemany('INSERT INTO AccountType (name) VALUES (?) ON CONFLICT DO NOTHING;', account_types_records)
+    
+    db_connection.commit()
+    db_connection.close()
+
+    print('Server side database created!')

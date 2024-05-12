@@ -1,5 +1,5 @@
-from server.utils.number_utils import is_positive
-from server.utils.string_utils import is_not_null_or_empty
+from utils.number_utils import is_positive
+from utils.string_utils import is_not_null_or_empty
 
 class LoginUser:
     #constructor

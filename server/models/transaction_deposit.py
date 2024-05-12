@@ -1,5 +1,5 @@
-from server.models.account import Account
-from server.utils.number_utils import is_positive
+from models.account import Account
+from utils.number_utils import is_positive
 
 class TransactionDeposit:
     #constructor

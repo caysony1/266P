@@ -1,4 +1,4 @@
-from server.utils.number_utils import is_positive
+from utils.number_utils import is_positive
 
 class UserId:
     #constructor

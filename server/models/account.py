@@ -1,7 +1,7 @@
-from server.models.account_balance import AccountBalance
-from server.models.account_id import AccountId
-from server.models.account_type import AccountType
-from server.models.user_id import UserId
+from models.account_balance import AccountBalance
+from models.account_id import AccountId
+from models.account_type import AccountType
+from models.user_id import UserId
 
 class Account:
     #constructor

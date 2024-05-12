@@ -1,5 +1,5 @@
-from server.models.login_user import LoginUser
-from server.models.register_user import RegisterUser
+from models.login_user import LoginUser
+from models.register_user import RegisterUser
 
 #preliminary material. subject to change
 class AuthService:

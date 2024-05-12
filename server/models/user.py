@@ -1,5 +1,5 @@
-from server.models.user_id import UserId
-from server.utils.string_utils import is_not_null_or_empty
+from models.user_id import UserId
+from utils.string_utils import is_not_null_or_empty
 
 class User:
     #constructor
