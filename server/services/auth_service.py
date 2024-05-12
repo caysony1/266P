@@ -1,12 +1,14 @@
+from server.models.login_user import LoginUser
 from server.models.register_user import RegisterUser
 
-
+#preliminary material. subject to change
 class AuthService:
     def __init__(self):
         pass
 
-    def get_user ():
+    def get_user (user_name, password):
         # get the user associated with the logged in session
+        login_user = LoginUser(user_name, password)
         pass
 
     def register (user_name, password, first_name, last_name, account_balance):
