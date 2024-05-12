@@ -5,5 +5,3 @@ def is_positive (input_value):
 
     if is_valid is False:
         raise ValueError('input number is not positive!')
-    
-    return True
