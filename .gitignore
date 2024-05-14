@@ -1,2 +1,7 @@
 server/.venv/
 bank_app.db
+server/database/__pycache__/schema.cpython-37.pyc
+server/database/__pycache__/schema.cpython-310.pyc
+.idea/vcs.xml
+.idea/misc.xml
+.idea/inspectionProfiles/profiles_settings.xml
