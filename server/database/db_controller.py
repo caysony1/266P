@@ -164,7 +164,7 @@ class DBController:
 
         Returns a Dict with 'id', 'username', 'password', 'first_name', 'last_name'
 
-        To retrieve a specific value, you can do it in one line like so:
+        To retrieve a specific value, you can do it like so:
 
         Example:
 
@@ -209,7 +209,7 @@ class DBController:
 
         Returns a Dict with 'id', 'user_id', 'account_type_id', 'balance'
 
-        To retrieve a specific value, you can do it in one line like so:
+        To retrieve a specific value, you can do it like so:
 
         Example:
 

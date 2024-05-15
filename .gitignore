@@ -9,5 +9,4 @@ server/database/__pycache__/schema.cpython-310.pyc
 server/database/__pycache__/db_controller.cpython-310.pyc
 .idea/266P.iml
 .idea/modules.xml
-.idea/266P.iml
-.idea/266P.iml
+**/__pycache__
