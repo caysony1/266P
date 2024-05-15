@@ -7,7 +7,10 @@ from account import Account
 '''
 Changelist: 
     
+    05/14/14 - Added and implemented table inspection methods. 
+             - Added insert_user, get_user_by_username, and insert_account methods,
     05/13/24 - Class created. Blocked out methods.
+    
 
 '''
 
@@ -19,7 +22,6 @@ class DBController:
     NOTE:
     DBController methods will open a connection to the bank_app.db, perform operations, then close the connection when finished.
 
-    TODO @kj-art-dev: Start actual implementation of database communication and methods.
     """
 
     def __init__(self):
@@ -36,7 +38,7 @@ class DBController:
     def inspect_user_table(self):
         """
 
-        Print out all the data stored in the User data table in bank_app.db
+        Print out all the data stored in the User table in bank_app.db
 
         Returns: None
 
@@ -55,7 +57,7 @@ class DBController:
 
     def inspect_account_table(self):
         """
-        Print out all the data stored in the Account data table in bank_app.db
+        Print out all the data stored in the Account table in bank_app.db
 
         Returns: None
 
@@ -75,7 +77,7 @@ class DBController:
     def inspect_account_type_table(self):
         """
 
-        Print out all the data stored in the AccountType data table in bank_app.db
+        Print out all the data stored in the AccountType table in bank_app.db
 
         Returns: None
 
@@ -93,10 +95,13 @@ class DBController:
 
     def insert_user(self, user_name, password, first_name, last_name):
         """
-        Add user object to the user table.
+        Add new user to User table in bank_app.db
 
         Args:
-            new_user: Type[User]
+            user_name: Type[String]
+            password: Type[String]
+            first_name: Type[String]
+            last_name: Type[String]
 
         Returns: None
 
@@ -118,7 +123,7 @@ class DBController:
 
     def get_user_by_username(self, user_name):
         """
-        Retrieve user data from User table based on username
+        Retrieve user data from User table based on username.
 
         Args:
             user_name: Type[String]
@@ -150,16 +155,31 @@ class DBController:
 
         return user_data
 
-    def insert_account(self):
+    def insert_account(self, user_id, account_type, balance):
         """
-        (WIP) Add a new account object to the account table
+        Add new account to Account table in bank_app.db
+
         Args:
-            account: Account-type object with an account ID.
+            user_id: Type[Int]
+            account_type: Type[Int]
+            balance: Type[Float]
 
         Returns: None
 
         """
-        pass
+        new_account_values = (user_id, account_type, balance)
+
+        sql_query_insert_account = """INSERT INTO Account (id, user_id, account_type_id, balance) VALUES (NULL, ?, ?, ?)"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_insert_account, new_account_values)
+
+        db_connect.commit()
+
+        db_connect.close()
 
     def update_balance(self, user, account, updated_balance):
         """

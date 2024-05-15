@@ -18,12 +18,16 @@ from db_controller import DBController
 #
 # db_connect.close()
 
+
+
 dbc = DBController()
 
+dbc.insert_user("admin", "admin", "admin", "admin")
 
-# dbc.insert_user("admin", "admin", "admin", "admin")
+dbc.inspect_user_table()
 
-user = dbc.get_user_by_username('admin')
+user_id = dbc.get_user_by_username('admin').get('username')
 
-print(user)
-print(user.get('id'))
+dbc.insert_account(user_id, 1, 10000.00)
+
+dbc.inspect_account_table()
