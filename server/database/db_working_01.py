@@ -19,7 +19,6 @@ from db_controller import DBController
 # db_connect.close()
 
 
-
 dbc = DBController()
 
 dbc.insert_user("admin", "admin", "admin", "admin")

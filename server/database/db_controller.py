@@ -1,19 +1,16 @@
 from os.path import join, dirname, abspath
 import sqlite3
-from user import User
-from register_user import RegisterUser
-from account import Account
 
 '''
 Changelist: 
     
     05/14/14 - Added and implemented table inspection methods. 
-             - Added insert_user, get_user_by_username, and insert_account methods,
+             - Added and implemented insert_user, get_user_by_username, and insert_account methods.
+             - Added WIP execute_query_method. Updated docstring format
     05/13/24 - Class created. Blocked out methods.
     
-
+    
 '''
-
 
 class DBController:
     """
@@ -21,6 +18,8 @@ class DBController:
 
     NOTE:
     DBController methods will open a connection to the bank_app.db, perform operations, then close the connection when finished.
+
+    TODO (kj-art-dev): Continue method introduction and implementation for whatever is needed next.
 
     """
 
@@ -40,7 +39,8 @@ class DBController:
 
         Print out all the data stored in the User table in bank_app.db
 
-        Returns: None
+        Returns:
+            None
 
         """
 
@@ -59,7 +59,8 @@ class DBController:
         """
         Print out all the data stored in the Account table in bank_app.db
 
-        Returns: None
+        Returns:
+            None
 
         """
 
@@ -79,7 +80,8 @@ class DBController:
 
         Print out all the data stored in the AccountType table in bank_app.db
 
-        Returns: None
+        Returns:
+            None
 
         """
         db_connect = sqlite3.connect(self.db_path)
@@ -93,6 +95,39 @@ class DBController:
 
         db_connect.close()
 
+    def execute_query(self, new_sql_query, can_commit):
+        """
+        (WIP)
+        Execute a full SQL query on bank_app.db
+
+        Args:
+            new_sql_query: Type[Str] with TRIPLE quotation marks (like a docstring)
+            can_commit: Type[Bool]
+
+        Returns:
+            None
+
+        """
+        if not can_commit:
+            db_connect = sqlite3.connect(self.db_path)
+
+            cursor = db_connect.cursor()
+
+            cursor.execute(new_sql_query)
+
+            db_connect.close()
+
+        if can_commit:
+            db_connect = sqlite3.connect(self.db_path)
+
+            cursor = db_connect.cursor()
+
+            cursor.execute(new_sql_query)
+
+            db_connect.commit()
+
+            db_connect.close()
+
     def insert_user(self, user_name, password, first_name, last_name):
         """
         Add new user to User table in bank_app.db
@@ -103,7 +138,8 @@ class DBController:
             first_name: Type[String]
             last_name: Type[String]
 
-        Returns: None
+        Returns:
+            None
 
         """
 
@@ -125,10 +161,17 @@ class DBController:
         """
         Retrieve user data from User table based on username.
 
+        To retrieve a specific value, you can do it in one line like so:
+
+        Examples:
+
+            foo_password = get_user_by_username('admin').get('password')
+
         Args:
             user_name: Type[String]
 
-        Returns: Type[Dict] if user is found.
+        Returns:
+            Type[Dict] if user is found.
 
         """
 
@@ -164,7 +207,8 @@ class DBController:
             account_type: Type[Int]
             balance: Type[Float]
 
-        Returns: None
+        Returns:
+            None
 
         """
         new_account_values = (user_id, account_type, balance)
@@ -189,7 +233,8 @@ class DBController:
             account: Account-type object
             updated_balance: number as float
 
-        Returns: None
+        Returns:
+            None
 
         """
         pass
@@ -202,7 +247,8 @@ class DBController:
             user: User-type object with a user ID
             first_name: New first name as string
 
-        Returns: None
+        Returns:
+            None
 
         """
         pass
@@ -214,7 +260,8 @@ class DBController:
             user: User-type object.
             last_name: New last name as string.
 
-        Returns: None
+        Returns:
+            None
 
         """
         pass
