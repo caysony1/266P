@@ -205,25 +205,25 @@ class DBController:
 
     def get_user_by_user_id(self, user_id):
         """
-                Retrieve user data from User table based on user ID.
+        Retrieve user data from User table based on user ID.
 
-                Returns a Dict with 'id', 'username', 'password', 'first_name', 'last_name'
+        Returns a Dict with 'id', 'username', 'password', 'first_name', 'last_name'
 
-                To retrieve a specific value, you can do it like so:
+        To retrieve a specific value, you can do it like so:
 
-                Example:
+        Example:
 
-                    dbc = DBController()
+            dbc = DBController()
 
-                    foo_password = dbc.get_user_by_id(1).get('password')
+            foo_password = dbc.get_user_by_id(1).get('password')
 
-                Args:
-                    user_id: Type[Int]
+        Args:
+            user_id: Type[Int]
 
-                Returns:
-                    Type[Dict] if user is found.
+        Returns:
+            Type[Dict] if user is found.
 
-                """
+        """
 
         sql_query_get_user = """SELECT * FROM User WHERE id = ?"""
 
@@ -317,7 +317,7 @@ class DBController:
            Returns:
                Type[Dict] if account is found.
 
-       """
+        """
 
         sql_query_get_account = """SELECT * FROM Account WHERE user_id = ?"""
 

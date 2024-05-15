@@ -1,12 +1,5 @@
 server/.venv/
 bank_app.db
-server/database/__pycache__/schema.cpython-37.pyc
-server/database/__pycache__/schema.cpython-310.pyc
-.idea/vcs.xml
-.idea/misc.xml
 .idea/inspectionProfiles/profiles_settings.xml
-.idea/266p_group_project.iml
-server/database/__pycache__/db_controller.cpython-310.pyc
 .idea/266P.iml
-.idea/modules.xml
 **/__pycache__
