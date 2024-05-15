@@ -5,7 +5,7 @@ import sqlite3
 Changelog: 
     
     05/15/24 - Added and implemented the following methods: 
-             - update_balance, update_password, update_first_name, update_last_name, get_account_by_username
+             - update_balance, update_password, update_first_name, update_last_name, get_account_by_username, get_account_by_user_id, get_user_by_user_id
     05/14/24 - Added and implemented table inspection methods. 
              - Added and implemented insert_user, get_user_by_username, and insert_account methods.
              - Added WIP execute_query_method. Updated docstring format
@@ -203,6 +203,51 @@ class DBController:
 
         return user_data
 
+    def get_user_by_user_id(self, user_id):
+        """
+                Retrieve user data from User table based on user ID.
+
+                Returns a Dict with 'id', 'username', 'password', 'first_name', 'last_name'
+
+                To retrieve a specific value, you can do it like so:
+
+                Example:
+
+                    dbc = DBController()
+
+                    foo_password = dbc.get_user_by_id(1).get('password')
+
+                Args:
+                    user_id: Type[Int]
+
+                Returns:
+                    Type[Dict] if user is found.
+
+                """
+
+        sql_query_get_user = """SELECT * FROM User WHERE id = ?"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_get_user, (user_id,))
+
+        data = cursor.fetchall()
+
+        user_data = {
+
+            "id": data[0][0],
+            "username": data[0][1],
+            "password": data[0][2],
+            "first_name": data[0][3],
+            "last_name": data[0][4]
+        }
+
+        db_connect.close()
+
+        return user_data
+
     def get_account_by_username(self, user_name):
         """
         Retrieve account data from Account table based on username.
@@ -226,9 +271,55 @@ class DBController:
 
         """
 
-        sql_query_get_account = """SELECT * FROM Account WHERE user_id = ?"""
+        sql_query_get_account = """SELECT * FROM Account WHERE id = ?"""
 
         user_id = self.get_user_by_username(user_name).get('id')
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_get_account, (user_id,))
+
+        data = cursor.fetchall()
+
+        account_data = {
+
+            "id": data[0][0],
+            "user_id": data[0][1],
+            "account_type_id": data[0][2],
+            "balance": data[0][3]
+
+        }
+
+        db_connect.close()
+
+        return account_data
+
+    def get_account_by_user_id(self, user_id):
+        """
+           Retrieve account data from Account table based on user ID.
+
+           Returns a Dict with 'id', 'user_id', 'account_type_id', 'balance'
+
+           To retrieve a specific value, you can do it like so:
+
+           Example:
+
+               dbc = DBController()
+
+               foo_balance = dbc.get_account_by_user_id(1).get('balance')
+
+
+           Args:
+               user_id: Type[Int]
+
+           Returns:
+               Type[Dict] if account is found.
+
+       """
+
+        sql_query_get_account = """SELECT * FROM Account WHERE user_id = ?"""
 
         db_connect = sqlite3.connect(self.db_path)
 
