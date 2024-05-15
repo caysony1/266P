@@ -1,19 +1,26 @@
 from os.path import join, dirname, abspath
 import sqlite3
-# import db_controller as dbc
+from db_controller import DBController
 
 # This will construct the path of the database in the project directory.
-db_path = join(dirname(dirname(abspath(__file__))), 'bank_app.db')
+# db_path = join(dirname(dirname(abspath(__file__))), 'bank_app.db')
+#
+# db_connect = sqlite3.connect(db_path)
+#
+# cursor = db_connect.cursor()
+#
+# sql_query_test_01 = """SELECT name FROM sqlite_master
+#   WHERE type='table';"""
+#
+# cursor.execute(sql_query_test_01)
+#
+# print(cursor.fetchall())
+#
+# db_connect.close()
 
-db_connect = sqlite3.connect(db_path)
+dbc = DBController()
 
-cursor = db_connect.cursor()
 
-sql_query_test_01 = """SELECT name FROM sqlite_master  
-  WHERE type='table';"""
+# dbc.insert_user("admin", "admin", "admin", "admin")
 
-cursor.execute(sql_query_test_01)
-
-print(cursor.fetchall())
-
-db_connect.close()
+dbc.inspect_user_table()

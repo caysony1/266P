@@ -1,5 +1,8 @@
+from os.path import join, dirname, abspath
 import sqlite3
-import account
+from user import User
+from register_user import RegisterUser
+from account import Account
 
 '''
 Changelist: 
@@ -8,49 +11,123 @@ Changelist:
 
 '''
 
+
 class DBController:
     """
     Database controller class to act as a liaison between the database and other app components.
 
+    NOTE:
+    DBController methods will open a connection to the bank_app.db, perform operations, then close the connection when finished.
+
     TODO @kj-art-dev: Start actual implementation of database communication and methods.
     """
 
-    def __init__(self, database):
+    def __init__(self):
         """
-        Initialize DBController with the database it controls.
-        Args:
-            database: db object
+        Initialize DBController with a path to the local database.
+
+        This path is used to connect to the database using the sqlite3.connect() method.
         """
-        self.database = database
+        self.db_path = None
+
+        if self.db_path is None:
+            self.db_path = join(dirname(dirname(abspath(__file__))), 'bank_app.db')
 
     def inspect_user_table(self):
         """
-        (WIP) Get all user data from tables. Should be used
 
-        Returns: All user data currently in table.
-
-        """
-        pass
-
-    def inspect_account_table(self):
-        """
-        (WIP) Get all account data from table.
-        """
-        pass
-
-    def add_user_to_table(self, user):
-        """
-        (WIP) Add user object to the user table.
-
-        Args:
-            user: User-type object with a user ID.
+        Print out all the data stored in the User data table in bank_app.db
 
         Returns: None
 
         """
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        sql_query = """SELECT * FROM User"""
+
+        for user in cursor.execute(sql_query):
+            print(user)
+
+        db_connect.close()
+
+    def inspect_account_table(self):
+        """
+        Print out all the data stored in the Account data table in bank_app.db
+
+        Returns: None
+
+        """
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        sql_query = """SELECT * FROM Account"""
+
+        for account in cursor.execute(sql_query):
+            print(account)
+
+        db_connect.close()
+
+    def inspect_account_type_table(self):
+        """
+
+        Print out all the data stored in the AccountType data table in bank_app.db
+
+        Returns: None
+
+        """
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        sql_query = """SELECT * FROM AccountType"""
+
+        for account_type in cursor.execute(sql_query):
+            print(account_type)
+
+        db_connect.close()
+
+    def insert_user(self, user_name, password, first_name, last_name):
+        """
+        Add user object to the user table.
+
+        Args:
+            new_user: Type[User]
+
+        Returns: None
+
+        """
+
+        new_user_values = (user_name, password, first_name, last_name)
+
+        sql_query_insert_user = """INSERT INTO User (id, username, password, first_name, last_name) VALUES (NULL, ?, ?, ?, ?)"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_insert_user, new_user_values)
+
+        db_connect.commit()
+
+        db_connect.close()
+
+    def get_user_by_username(self, user_name):
+        """
+        R
+        Args:
+            user_name:
+
+        Returns:
+
+        """
         pass
 
-    def add_account_to_table(self, account):
+    def insert_account(self):
         """
         (WIP) Add a new account object to the account table
         Args:
@@ -98,5 +175,3 @@ class DBController:
 
         """
         pass
-
-
