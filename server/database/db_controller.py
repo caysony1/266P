@@ -118,14 +118,37 @@ class DBController:
 
     def get_user_by_username(self, user_name):
         """
-        R
-        Args:
-            user_name:
+        Retrieve user data from User table based on username
 
-        Returns:
+        Args:
+            user_name: Type[String]
+
+        Returns: Type[Dict] if user is found.
 
         """
-        pass
+
+        sql_query_get_user = """SELECT * FROM User WHERE username = ?"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_get_user, (user_name,))
+
+        data = cursor.fetchall()
+
+        user_data = {
+
+            "id": data[0][0],
+            "username": data[0][1],
+            "password": data[0][2],
+            "first_name": data[0][3],
+            "last_name": data[0][4]
+        }
+
+        db_connect.close()
+
+        return user_data
 
     def insert_account(self):
         """

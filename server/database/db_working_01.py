@@ -23,4 +23,7 @@ dbc = DBController()
 
 # dbc.insert_user("admin", "admin", "admin", "admin")
 
-dbc.inspect_user_table()
+user = dbc.get_user_by_username('admin')
+
+print(user)
+print(user.get('id'))
