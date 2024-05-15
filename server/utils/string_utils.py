@@ -1,7 +1,22 @@
 # String utility standalone functions
 
-def is_not_null_or_empty (input_value):
-    is_valid = input_value is not None and input_value.strip() != ''
+'''
+Changelog:
+    05/15/24 - Returns input_value if it passes validation instead of None.
 
-    if is_valid is False:
+'''
+
+
+def is_not_null_or_empty(input_value):
+    """
+    Check if string is empty
+    Args:
+        input_value: Type[Str]
+
+    Returns:
+        input_value if not empty.
+    """
+    if input_value is not None and input_value.strip() == '':
         raise ValueError('null or empty input value detected!')
+    else:
+        return input_value

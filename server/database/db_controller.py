@@ -2,9 +2,11 @@ from os.path import join, dirname, abspath
 import sqlite3
 
 '''
-Changelist: 
+Changelog: 
     
-    05/14/14 - Added and implemented table inspection methods. 
+    05/15/24 - Added and implemented the following methods: 
+             - update_balance, update_password, update_first_name, update_last_name, get_account_by_username
+    05/14/24 - Added and implemented table inspection methods. 
              - Added and implemented insert_user, get_user_by_username, and insert_account methods.
              - Added WIP execute_query_method. Updated docstring format
     05/13/24 - Class created. Blocked out methods.
@@ -12,12 +14,13 @@ Changelist:
     
 '''
 
+
 class DBController:
     """
     Database controller class to act as a liaison between the database and other app components.
 
     NOTE:
-    DBController methods will open a connection to the bank_app.db, perform operations, then close the connection when finished.
+    DBController methods open a connection to the bank_app.db, perform operations, then close the connection when finished.
 
     TODO (kj-art-dev): Continue method introduction and implementation for whatever is needed next.
 
@@ -25,9 +28,7 @@ class DBController:
 
     def __init__(self):
         """
-        Initialize DBController with a path to the local database.
-
-        This path is used to connect to the database using the sqlite3.connect() method.
+        DBController should be able to find the bank_app.db in the project's directory.
         """
         self.db_path = None
 
@@ -133,10 +134,10 @@ class DBController:
         Add new user to User table in bank_app.db
 
         Args:
-            user_name: Type[String]
-            password: Type[String]
-            first_name: Type[String]
-            last_name: Type[String]
+            user_name: Type[Str]
+            password: Type[Str]
+            first_name: Type[Str]
+            last_name: Type[Str]
 
         Returns:
             None
@@ -161,14 +162,18 @@ class DBController:
         """
         Retrieve user data from User table based on username.
 
+        Returns a Dict with 'id', 'username', 'password', 'first_name', 'last_name'
+
         To retrieve a specific value, you can do it in one line like so:
 
-        Examples:
+        Example:
 
-            foo_password = get_user_by_username('admin').get('password')
+            dbc = DBController()
+
+            foo_password = dbc.get_user_by_username('foo').get('password')
 
         Args:
-            user_name: Type[String]
+            user_name: Type[Str]
 
         Returns:
             Type[Dict] if user is found.
@@ -198,6 +203,54 @@ class DBController:
 
         return user_data
 
+    def get_account_by_username(self, user_name):
+        """
+        Retrieve account data from Account table based on username.
+
+        Returns a Dict with 'id', 'user_id', 'account_type_id', 'balance'
+
+        To retrieve a specific value, you can do it in one line like so:
+
+        Example:
+
+            dbc = DBController()
+
+            foo_balance = dbc.get_account_by_username('foo').get('balance')
+
+
+        Args:
+            user_name: Type[Str]
+
+        Returns:
+            Type[Dict] if account is found.
+
+        """
+
+        sql_query_get_account = """SELECT * FROM Account WHERE user_id = ?"""
+
+        user_id = self.get_user_by_username(user_name).get('id')
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_get_account, (user_id,))
+
+        data = cursor.fetchall()
+
+        account_data = {
+
+            "id": data[0][0],
+            "user_id": data[0][1],
+            "account_type_id": data[0][2],
+            "balance": data[0][3]
+
+        }
+
+        db_connect.close()
+
+        return account_data
+
     def insert_account(self, user_id, account_type, balance):
         """
         Add new account to Account table in bank_app.db
@@ -225,43 +278,118 @@ class DBController:
 
         db_connect.close()
 
-    def update_balance(self, user, account, updated_balance):
+    def update_balance(self, user_name, updated_balance):
         """
-        (WIP) Update the account balance for a user. Can be
-        Args:
-            user: User-type object
-            account: Account-type object
-            updated_balance: number as float
+        Update the balance in a user's bank account.
 
-        Returns:
-            None
-
-        """
-        pass
-
-    def update_user_first_name(self, user, first_name):
-        """
-        (WIP) Update a user's first name in User table in database.
+        NOTE: Does not currently have safeguards implemented.
 
         Args:
-            user: User-type object with a user ID
-            first_name: New first name as string
+            user_name: Type[Str]
+            updated_balance: Type[Float]
 
         Returns:
             None
 
         """
-        pass
+        user_id = self.get_user_by_username(user_name).get('id')
 
-    def update_user_last_name(self, user, last_name):
+        update_balance_values = (updated_balance, user_id)
+
+        sql_query_update_balance = """UPDATE Account SET balance = ? WHERE id = ?"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_update_balance, update_balance_values)
+
+        db_connect.commit()
+
+        db_connect.close()
+
+    def update_password(self, user_name, new_password):
         """
-        (WIP) Update user's last name in Users table in database
+        Update a user's password in the User table.
 
-            user: User-type object.
-            last_name: New last name as string.
+        NOTE: Does not currently have safeguards.
+
+        Args:
+            user_name: Type[Str]
+            new_password: Type[Str]
 
         Returns:
             None
 
         """
-        pass
+        user_id = self.get_user_by_username(user_name).get('id')
+
+        update_password_values = (new_password, user_id)
+
+        sql_query_update_password = """UPDATE User SET password = ? WHERE id = ?"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_update_password, update_password_values)
+
+        db_connect.commit()
+
+        db_connect.close()
+
+    def update_first_name(self, user_name, new_first_name):
+        """
+        Update a user's first name in the User table.
+
+        Args:
+            user_name: Type[Str]
+            new_first_name: Type[Str]
+
+        Returns:
+            None
+
+        """
+        user_id = self.get_user_by_username(user_name).get('id')
+
+        update_name_values = (new_first_name, user_id)
+
+        sql_query_update_firstname = """UPDATE User SET first_name = ? WHERE id = ?"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_update_firstname, update_name_values)
+
+        db_connect.commit()
+
+        db_connect.close()
+
+    def update_last_name(self, user_name, new_last_name):
+        """
+        Update a user's first name in the User table.
+
+        Args:
+            user_name: Type[Str]
+            new_last_name: Type[Str]
+
+        Returns:
+            None
+
+        """
+        user_id = self.get_user_by_username(user_name).get('id')
+
+        update_name_values = (new_last_name, user_id)
+
+        sql_query_update_name = """UPDATE User SET last_name = ? WHERE id = ?"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_update_name, update_name_values)
+
+        db_connect.commit()
+
+        db_connect.close()

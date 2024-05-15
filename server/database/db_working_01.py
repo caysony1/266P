@@ -1,32 +1,27 @@
-from os.path import join, dirname, abspath
 import sqlite3
 from db_controller import DBController
+from services.auth_service import AuthService
 
-# This will construct the path of the database in the project directory.
-# db_path = join(dirname(dirname(abspath(__file__))), 'bank_app.db')
-#
-# db_connect = sqlite3.connect(db_path)
-#
-# cursor = db_connect.cursor()
-#
-# sql_query_test_01 = """SELECT name FROM sqlite_master
-#   WHERE type='table';"""
-#
-# cursor.execute(sql_query_test_01)
-#
-# print(cursor.fetchall())
-#
-# db_connect.close()
+'''
+THIS IS A TEST FILE
 
+This is just to test database communication and methods etc.
 
+'''
 dbc = DBController()
 
-dbc.insert_user("admin", "admin", "admin", "admin")
+auth = AuthService()
 
+auth.register("admin", 'password1234', 'the', 'administrator', 1, 100000.00)
+
+auth.register("usertest", 'password5678', 'foo', 'bar', 1, 55000.50)
+
+print("User table: ")
 dbc.inspect_user_table()
-
-user_id = dbc.get_user_by_username('admin').get('username')
-
-dbc.insert_account(user_id, 1, 10000.00)
-
+print("Account table: ")
 dbc.inspect_account_table()
+print("Test:")
+fetch_balance = dbc.get_account_by_username('admin').get('balance')
+
+print("Admin balance: " + str(fetch_balance))
+
