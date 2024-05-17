@@ -6,6 +6,7 @@ from database.db_controller import DBController
 '''
 Changelog: 
 
+    05/16/24 - account_type no longer required for register()
     05/15/24 - Base functionality for register() implemented.
 
 '''
@@ -20,7 +21,7 @@ class AuthService:
         login_user = LoginUser(user_name, password)
         pass
 
-    def register(self, user_name, password, first_name, last_name, account_type, account_balance):
+    def register(self, user_name, password, first_name, last_name, account_balance):
         """
         Add new user and account to bank database.
 
@@ -29,7 +30,6 @@ class AuthService:
             password: Type[Str]
             first_name: Type[Str]
             last_name: Type[Str]
-            account_type: Type[Int]
             account_balance: Type[Float]
 
         Returns:
@@ -46,7 +46,7 @@ class AuthService:
 
         get_user_id = dbc.get_user_by_username(new_user.get_user_name()).get('id')
 
-        dbc.insert_account(get_user_id, account_type, account_balance)
+        dbc.insert_account(get_user_id, account_balance)
 
     def login(self, user_name, password):
         # perform authentication action and utilize the database

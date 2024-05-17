@@ -4,7 +4,8 @@ import sqlite3
 '''
 Changelog: 
     
-    05/16/24 - Added and implemented update_user_name
+    05/16/24 - Added and implemented update_user_name. 
+             - insert_account() no longer requires account_type as argument.
     05/15/24 - Added and implemented the following methods: 
              - update_balance, update_password, update_first_name, update_last_name, get_account_by_username, get_account_by_user_id, get_user_by_user_id
     05/14/24 - Added and implemented table inspection methods. 
@@ -344,22 +345,21 @@ class DBController:
 
         return account_data
 
-    def insert_account(self, user_id, account_type, balance):
+    def insert_account(self, user_id, balance):
         """
         Add new account to Account table in bank_app.db
 
         Args:
             user_id: Type[Int]
-            account_type: Type[Int]
             balance: Type[Float]
 
         Returns:
             None
 
         """
-        new_account_values = (user_id, account_type, balance)
+        new_account_values = (user_id, balance)
 
-        sql_query_insert_account = """INSERT INTO Account (id, user_id, account_type_id, balance) VALUES (NULL, ?, ?, ?)"""
+        sql_query_insert_account = """INSERT INTO Account (id, user_id, account_type_id, balance) VALUES (NULL, ?, 1, ?)"""
 
         db_connect = sqlite3.connect(self.db_path)
 
