@@ -23,7 +23,8 @@ class DBController:
     NOTE:
     DBController methods open a connection to the bank_app.db, perform operations, then close the connection when finished.
 
-    TODO (kj-art-dev): Continue method introduction and implementation for whatever is needed next.
+    TODO (kj-art-dev):  -   Continue method introduction and implementation for whatever is needed next.
+                        -   Duplicate one or more methods, convert them to use concatentation as a vulnerability, then test them out.
 
     """
 
