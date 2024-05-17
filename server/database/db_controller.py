@@ -4,6 +4,7 @@ import sqlite3
 '''
 Changelog: 
     
+    05/16/24 - Added and implemented update_user_name
     05/15/24 - Added and implemented the following methods: 
              - update_balance, update_password, update_first_name, update_last_name, get_account_by_username, get_account_by_user_id, get_user_by_user_id
     05/14/24 - Added and implemented table inspection methods. 
@@ -98,8 +99,8 @@ class DBController:
 
     def execute_query(self, new_sql_query, can_commit):
         """
-        (WIP)
-        Execute a full SQL query on bank_app.db
+
+        Execute a full SQL query on the database.
 
         Args:
             new_sql_query: Type[Str] with TRIPLE quotation marks (like a docstring)
@@ -429,6 +430,34 @@ class DBController:
 
         db_connect.close()
 
+    def update_user_name(self, user_name, new_user_name):
+        """
+        Update the username.
+
+        Args:
+            user_name: Type[Str]
+            new_user_name: Type[Str]
+
+        Returns:
+            None
+
+        """
+        user_id = self.get_user_by_username(user_name).get('id')
+
+        update_username_values = (new_user_name, user_id)
+
+        sql_query_update_username = """UPDATE User SET username = ? WHERE id = ?"""
+
+        db_connect = sqlite3.connect(self.db_path)
+
+        cursor = db_connect.cursor()
+
+        cursor.execute(sql_query_update_username, update_username_values)
+
+        db_connect.commit()
+
+        db_connect.close()
+
     def update_first_name(self, user_name, new_first_name):
         """
         Update a user's first name in the User table.
@@ -459,7 +488,7 @@ class DBController:
 
     def update_last_name(self, user_name, new_last_name):
         """
-        Update a user's first name in the User table.
+        Update a user's last name in the User table.
 
         Args:
             user_name: Type[Str]
