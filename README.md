@@ -11,10 +11,18 @@ Instructions to run project. Order matters!
     Windows: `python3 server\main.py`\
     MacOS/Linux: `python3 server/main.py`
 
-2. Run the client side project using the command:
+2. If for the first time - set up the client side project. From the root directory, run the following in order:
 
-    `some npm script that will evnetually run the client side` 
+    `cd server`
+    `npm install` 
 
-3. Open a browser (any should suffice) and go to http://localhost:8080/
+3. Run the client side application
+
+    `npm run build`
+    `npm run start`
+
+3. The browser should open with the client side project. If it does not automatically open, go to http://localhost:3000.
 
 4. Hacking vulnerability hunting!
+
+To terminate either server or client side projects --> just do Control + C within the respective folder (/client and /server folders) 
