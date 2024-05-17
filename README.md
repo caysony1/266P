@@ -13,12 +13,12 @@ Instructions to run project. Order matters!
 
 2. If for the first time - set up the client side project. From the root directory, run the following in order:
 
-    `cd server`
+    `cd server`\
     `npm install` 
 
 3. Run the client side application
 
-    `npm run build`
+    `npm run build`\
     `npm run start`
 
 3. The browser should open with the client side project. If it does not automatically open, go to http://localhost:3000.
