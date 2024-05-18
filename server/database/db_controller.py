@@ -4,6 +4,7 @@ import sqlite3
 '''
 Changelog: 
     
+    05/18/24 - Vulnerability update.
     05/16/24 - Added and implemented update_user_name. 
              - insert_account() no longer requires account_type as argument.
     05/15/24 - Added and implemented the following methods: 
@@ -12,8 +13,7 @@ Changelog:
              - Added and implemented insert_user, get_user_by_username, and insert_account methods.
              - Added WIP execute_query_method. Updated docstring format
     05/13/24 - Class created. Blocked out methods.
-    
-    
+      
 '''
 
 
@@ -22,10 +22,7 @@ class DBController:
     Database controller class to act as a liaison between the database and other app components.
 
     NOTE:
-    DBController methods open a connection to the bank_app.db, perform operations, then close the connection when finished.
-
-    TODO (kj-art-dev):  -   Continue method introduction and implementation for whatever is needed next.
-                        -   Duplicate one or more methods, convert them to use concatentation as a vulnerability, then test them out.
+     - DBController methods open a connection to the bank_app.db, perform operations, then close the connection when finished.
 
     """
 
@@ -101,11 +98,13 @@ class DBController:
 
     def execute_query(self, new_sql_query, can_commit):
         """
-
         Execute a full SQL query on the database.
 
+        NOTE:
+            - Use TRIPLE quotation marks where you would input a string for new_sql_query (like a docstring)
+
         Args:
-            new_sql_query: Type[Str] with TRIPLE quotation marks (like a docstring)
+            new_sql_query: Type[Str]
             can_commit: Type[Bool]
 
         Returns:
@@ -146,16 +145,13 @@ class DBController:
             None
 
         """
-
-        new_user_values = (user_name, password, first_name, last_name)
-
-        sql_query_insert_user = """INSERT INTO User (id, username, password, first_name, last_name) VALUES (NULL, ?, ?, ?, ?)"""
+        sql_query_insert_user = "INSERT INTO User (id, username, password, first_name, last_name) VALUES (NULL, '" + user_name + "', '" + password + "', '" + first_name + "', '" + last_name + "')"
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_insert_user, new_user_values)
+        cursor.execute(sql_query_insert_user)
 
         db_connect.commit()
 
@@ -167,9 +163,9 @@ class DBController:
 
         Returns a Dict with 'id', 'username', 'password', 'first_name', 'last_name'
 
-        To retrieve a specific value, you can do it like so:
-
         Example:
+
+            To retrieve a specific value, you can do it like so:
 
             dbc = DBController()
 
@@ -183,13 +179,13 @@ class DBController:
 
         """
 
-        sql_query_get_user = """SELECT * FROM User WHERE username = ?"""
+        sql_query_get_user = "SELECT * FROM User WHERE username = '" + user_name + "';"
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_get_user, (user_name,))
+        cursor.execute(sql_query_get_user)
 
         data = cursor.fetchall()
 
@@ -212,9 +208,9 @@ class DBController:
 
         Returns a Dict with 'id', 'username', 'password', 'first_name', 'last_name'
 
-        To retrieve a specific value, you can do it like so:
-
         Example:
+
+            To retrieve a specific value, you can do it like so:
 
             dbc = DBController()
 
@@ -228,13 +224,13 @@ class DBController:
 
         """
 
-        sql_query_get_user = """SELECT * FROM User WHERE id = ?"""
+        sql_query_get_user = "SELECT * FROM User WHERE id = " + str(user_id)
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_get_user, (user_id,))
+        cursor.execute(sql_query_get_user)
 
         data = cursor.fetchall()
 
@@ -257,14 +253,12 @@ class DBController:
 
         Returns a Dict with 'id', 'user_id', 'account_type_id', 'balance'
 
-        To retrieve a specific value, you can do it like so:
-
         Example:
+            To retrieve a specific value, you can do it like so:
 
             dbc = DBController()
 
             foo_balance = dbc.get_account_by_username('foo').get('balance')
-
 
         Args:
             user_name: Type[Str]
@@ -274,15 +268,14 @@ class DBController:
 
         """
 
-        sql_query_get_account = """SELECT * FROM Account WHERE id = ?"""
-
-        user_id = self.get_user_by_username(user_name).get('id')
+        sql_query_get_account = "SELECT * FROM Account WHERE id = " + str(
+            self.get_user_by_username(user_name).get('id'))
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_get_account, (user_id,))
+        cursor.execute(sql_query_get_account)
 
         data = cursor.fetchall()
 
@@ -305,9 +298,8 @@ class DBController:
 
            Returns a Dict with 'id', 'user_id', 'account_type_id', 'balance'
 
-           To retrieve a specific value, you can do it like so:
-
            Example:
+               - To retrieve a specific value, you can do it like so:
 
                dbc = DBController()
 
@@ -321,14 +313,13 @@ class DBController:
                Type[Dict] if account is found.
 
         """
-
-        sql_query_get_account = """SELECT * FROM Account WHERE user_id = ?"""
+        sql_query_get_account = "SELECT * FROM Account WHERE user_id = " + str(user_id)
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_get_account, (user_id,))
+        cursor.execute(sql_query_get_account)
 
         data = cursor.fetchall()
 
@@ -357,15 +348,16 @@ class DBController:
             None
 
         """
-        new_account_values = (user_id, balance)
 
-        sql_query_insert_account = """INSERT INTO Account (id, user_id, account_type_id, balance) VALUES (NULL, ?, 1, ?)"""
+        sql_query_insert_account = "INSERT INTO Account (id, user_id, account_type_id, balance) VALUES (NULL, '" + str(
+            user_id) + "', '" + str(
+            1) + "', '" + str(balance) + "')"
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_insert_account, new_account_values)
+        cursor.execute(sql_query_insert_account)
 
         db_connect.commit()
 
@@ -375,8 +367,6 @@ class DBController:
         """
         Update the balance in a user's bank account.
 
-        NOTE: Does not currently have safeguards implemented.
-
         Args:
             user_name: Type[Str]
             updated_balance: Type[Float]
@@ -385,17 +375,14 @@ class DBController:
             None
 
         """
-        user_id = self.get_user_by_username(user_name).get('id')
-
-        update_balance_values = (updated_balance, user_id)
-
-        sql_query_update_balance = """UPDATE Account SET balance = ? WHERE id = ?"""
+        sql_query_update_balance = "UPDATE Account SET balance = " + str(updated_balance) + " WHERE id = " + str(
+            self.get_user_by_username(user_name).get('id'))
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_update_balance, update_balance_values)
+        cursor.execute(sql_query_update_balance)
 
         db_connect.commit()
 
@@ -405,8 +392,6 @@ class DBController:
         """
         Update a user's password in the User table.
 
-        NOTE: Does not currently have safeguards.
-
         Args:
             user_name: Type[Str]
             new_password: Type[Str]
@@ -415,17 +400,14 @@ class DBController:
             None
 
         """
-        user_id = self.get_user_by_username(user_name).get('id')
-
-        update_password_values = (new_password, user_id)
-
-        sql_query_update_password = """UPDATE User SET password = ? WHERE id = ?"""
+        sql_query_update_password = "UPDATE User SET password = '" + new_password + "' WHERE id = " + str(
+            self.get_user_by_username(user_name).get('id'))
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_update_password, update_password_values)
+        cursor.execute(sql_query_update_password)
 
         db_connect.commit()
 
@@ -443,17 +425,15 @@ class DBController:
             None
 
         """
-        user_id = self.get_user_by_username(user_name).get('id')
 
-        update_username_values = (new_user_name, user_id)
-
-        sql_query_update_username = """UPDATE User SET username = ? WHERE id = ?"""
+        sql_query_update_username = "UPDATE User SET username = '" + new_user_name + "' WHERE id = " + str(
+            self.get_user_by_username(user_name).get('id'))
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_update_username, update_username_values)
+        cursor.execute(sql_query_update_username)
 
         db_connect.commit()
 
@@ -471,17 +451,15 @@ class DBController:
             None
 
         """
-        user_id = self.get_user_by_username(user_name).get('id')
 
-        update_name_values = (new_first_name, user_id)
-
-        sql_query_update_firstname = """UPDATE User SET first_name = ? WHERE id = ?"""
+        sql_query_update_firstname = "UPDATE User SET first_name = '" + new_first_name + "' WHERE id = " + str(
+            self.get_user_by_username(user_name).get('id'))
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_update_firstname, update_name_values)
+        cursor.execute(sql_query_update_firstname)
 
         db_connect.commit()
 
@@ -499,17 +477,14 @@ class DBController:
             None
 
         """
-        user_id = self.get_user_by_username(user_name).get('id')
-
-        update_name_values = (new_last_name, user_id)
-
-        sql_query_update_name = """UPDATE User SET last_name = ? WHERE id = ?"""
+        sql_query_update_name = "UPDATE User SET last_name = '" + new_last_name + "' WHERE id = " + str(
+            self.get_user_by_username(user_name).get('id'))
 
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_update_name, update_name_values)
+        cursor.execute(sql_query_update_name)
 
         db_connect.commit()
 
