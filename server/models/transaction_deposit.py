@@ -5,7 +5,7 @@ class TransactionDeposit:
     #constructor
     def __init__(self, account, amount):
         # be very cautious here to do validation with Account class
-        self._account = Account(account.account_id, account.user_id, account.account_type, account.account_balance)
+        self._account = Account(account.account_id, account.user_id, account.account_balance)
         self._amount = is_positive(amount)
 
     def get_account_id(self):
@@ -13,9 +13,6 @@ class TransactionDeposit:
     
     def get_user_id(self):
         return self._account.get_user_id()
-
-    def get_account_type(self):
-        return self._account.get_account_type()
 
     def get_deposit_amount(self):
         return self._amount
