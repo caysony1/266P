@@ -29,17 +29,13 @@ dependencies for this project:
 
     `pip install -r dependencies.txt`
 
-7. Deactivate the virtual environment
-
-    `deactivate`
-
-8. Run the following to activate the server-side application:
+6. Run the following to activate the server-side application:
 
     `python3 main.py`
 
 ### Run the Client Side Project
 
-1. Go back to the root directory of this project (266P)
+1. In a separate Terminal window (this is important!), go back to the root directory of this project (266P)
 
 2. Run the following commands:
 
@@ -57,5 +53,14 @@ dependencies for this project:
 
 ### How to Terminate application
 
-1. Go to the server side folder (`/server`) and do Ctrl+C on keyboard.
-2. Go to the client side folder (`/client`) and do Ctrl+C on keyboard.
+#### For Server Side Application
+
+1. Go to the terminal window where the application is running
+2. Type in `deactivate`
+3. Successfully terminated server side application
+
+#### For Client Side Application
+
+1. Go to the terminal window where the application is running
+2. Press `Ctrl+C` on the keyboard
+3. Successfully terminated client side application
