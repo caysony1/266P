@@ -4,6 +4,7 @@ import sqlite3
 '''
 Changelog: 
     
+    05/18/24 - Removed account_type from db_controller and db schema overall
     05/18/24 - Vulnerability update. Also added type definitions to arguments.
     05/16/24 - Added and implemented update_user_name. 
              - insert_account() no longer requires account_type as argument.
@@ -73,26 +74,6 @@ class DBController:
 
         for account in cursor.execute(sql_query):
             print(account)
-
-        db_connect.close()
-
-    def inspect_account_type_table(self):
-        """
-
-        Print out all the data stored in the AccountType table in bank_app.db
-
-        Returns:
-            None
-
-        """
-        db_connect = sqlite3.connect(self.db_path)
-
-        cursor = db_connect.cursor()
-
-        sql_query = """SELECT * FROM AccountType"""
-
-        for account_type in cursor.execute(sql_query):
-            print(account_type)
 
         db_connect.close()
 
@@ -251,7 +232,7 @@ class DBController:
         """
         Retrieve account data from Account table based on username.
 
-        Returns a Dict with 'id', 'user_id', 'account_type_id', 'balance'
+        Returns a Dict with 'id', 'user_id', 'balance'
 
         Example:
             To retrieve a specific value, you can do it like so:
@@ -280,12 +261,9 @@ class DBController:
         data = cursor.fetchall()
 
         account_data = {
-
             "id": data[0][0],
             "user_id": data[0][1],
-            "account_type_id": data[0][2],
-            "balance": data[0][3]
-
+            "balance": data[0][2]
         }
 
         db_connect.close()
@@ -296,7 +274,7 @@ class DBController:
         """
            Retrieve account data from Account table based on user ID.
 
-           Returns a Dict with 'id', 'user_id', 'account_type_id', 'balance'
+           Returns a Dict with 'id', 'user_id', 'balance'
 
            Example:
                - To retrieve a specific value, you can do it like so:
@@ -324,12 +302,9 @@ class DBController:
         data = cursor.fetchall()
 
         account_data = {
-
             "id": data[0][0],
             "user_id": data[0][1],
-            "account_type_id": data[0][2],
-            "balance": data[0][3]
-
+            "balance": data[0][2]
         }
 
         db_connect.close()
@@ -349,9 +324,8 @@ class DBController:
 
         """
 
-        sql_query_insert_account = "INSERT INTO Account (id, user_id, account_type_id, balance) VALUES (NULL, '" + str(
-            user_id) + "', '" + str(
-            1) + "', '" + str(balance) + "')"
+        sql_query_insert_account = "INSERT INTO Account (user_id, balance) VALUES ('" + str(
+            user_id) + "', '" + str(balance) + "')"
 
         db_connect = sqlite3.connect(self.db_path)
 

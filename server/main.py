@@ -1,7 +1,14 @@
+from flask import Flask
 from database.schema import create_db
+from api.user_routes import user
+from api.account_routes import account
 
-def main():
+flask = Flask(__name__)
+    
+if __name__ == '__main__':
     create_db()
 
-if __name__ == '__main__':
-    main()
+    # register the flask endpoints
+    flask.register_blueprint(user)
+    flask.register_blueprint(account)
+    flask.run()
