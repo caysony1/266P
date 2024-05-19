@@ -4,7 +4,7 @@ import sqlite3
 '''
 Changelog: 
     
-    05/18/24 - Vulnerability update.
+    05/18/24 - Vulnerability update. Also added type definitions to arguments.
     05/16/24 - Added and implemented update_user_name. 
              - insert_account() no longer requires account_type as argument.
     05/15/24 - Added and implemented the following methods: 
@@ -96,7 +96,7 @@ class DBController:
 
         db_connect.close()
 
-    def execute_query(self, new_sql_query, can_commit):
+    def execute_query(self, new_sql_query: str, can_commit: bool):
         """
         Execute a full SQL query on the database.
 
@@ -131,7 +131,7 @@ class DBController:
 
             db_connect.close()
 
-    def insert_user(self, user_name, password, first_name, last_name):
+    def insert_user(self, user_name: str, password: str, first_name: str, last_name: str):
         """
         Add new user to User table in bank_app.db
 
@@ -157,7 +157,7 @@ class DBController:
 
         db_connect.close()
 
-    def get_user_by_username(self, user_name):
+    def get_user_by_username(self, user_name: str):
         """
         Retrieve user data from User table based on username.
 
@@ -202,7 +202,7 @@ class DBController:
 
         return user_data
 
-    def get_user_by_user_id(self, user_id):
+    def get_user_by_user_id(self, user_id: int):
         """
         Retrieve user data from User table based on user ID.
 
@@ -247,7 +247,7 @@ class DBController:
 
         return user_data
 
-    def get_account_by_username(self, user_name):
+    def get_account_by_username(self, user_name: str):
         """
         Retrieve account data from Account table based on username.
 
@@ -292,7 +292,7 @@ class DBController:
 
         return account_data
 
-    def get_account_by_user_id(self, user_id):
+    def get_account_by_user_id(self, user_id: int):
         """
            Retrieve account data from Account table based on user ID.
 
@@ -336,7 +336,7 @@ class DBController:
 
         return account_data
 
-    def insert_account(self, user_id, balance):
+    def insert_account(self, user_id: int, balance: float):
         """
         Add new account to Account table in bank_app.db
 
@@ -363,7 +363,7 @@ class DBController:
 
         db_connect.close()
 
-    def update_balance(self, user_name, updated_balance):
+    def update_balance(self, user_name: str, updated_balance: float):
         """
         Update the balance in a user's bank account.
 
@@ -388,7 +388,7 @@ class DBController:
 
         db_connect.close()
 
-    def update_password(self, user_name, new_password):
+    def update_password(self, user_name: str, new_password: str):
         """
         Update a user's password in the User table.
 
@@ -413,7 +413,7 @@ class DBController:
 
         db_connect.close()
 
-    def update_user_name(self, user_name, new_user_name):
+    def update_user_name(self, user_name: str, new_user_name: str):
         """
         Update the username.
 
@@ -439,7 +439,7 @@ class DBController:
 
         db_connect.close()
 
-    def update_first_name(self, user_name, new_first_name):
+    def update_first_name(self, user_name: str, new_first_name: str):
         """
         Update a user's first name in the User table.
 
@@ -465,7 +465,7 @@ class DBController:
 
         db_connect.close()
 
-    def update_last_name(self, user_name, new_last_name):
+    def update_last_name(self, user_name: str, new_last_name: str):
         """
         Update a user's last name in the User table.
 
