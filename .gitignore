@@ -1,4 +1,5 @@
-server/venv/
+**/.DS_Store
+server/.venv/
 bank_app.db
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/266P.iml
