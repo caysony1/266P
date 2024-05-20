@@ -17,7 +17,7 @@ Instructions to run project. Order matters!
 3. Run the following commands:
 
     `cd server`\
-    `python3 -m venv .venv`\
+    `python3 -m venv .venv`
 
 4. Activate python's virtual environment (command is based on OS used!):
 
@@ -49,15 +49,16 @@ dependencies for this project:
 
 3. The browser should open with the client side project. If it does not automatically open, go to http://localhost:3000.
 
-4. Hacking vulnerability hunting!
+4. Happy vulnerability hunting!
 
 ### How to Terminate application
 
 #### For Server Side Application
 
 1. Go to the terminal window where the application is running
-2. Type in `deactivate`
-3. Successfully terminated server side application
+2. Press `Ctrl+C` on the keyboard
+3. Type in `deactivate`
+4. Successfully terminated server side application
 
 #### For Client Side Application
 

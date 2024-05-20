@@ -215,8 +215,10 @@ class DBController:
 
         data = cursor.fetchall()
 
-        user_data = {
+        if data is None:
+            return None
 
+        user_data = {
             "id": data[0][0],
             "username": data[0][1],
             "password": data[0][2],
