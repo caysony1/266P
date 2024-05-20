@@ -339,7 +339,7 @@ class DBController:
 
         db_connect.close()
 
-    def update_balance(self, user_name: str, updated_balance: float):
+    def update_balance(self, user_id: str, updated_balance: float):
         """
         Update the balance in a user's bank account.
 
@@ -351,8 +351,7 @@ class DBController:
             None
 
         """
-        sql_query_update_balance = "UPDATE Account SET balance = " + str(updated_balance) + " WHERE id = " + str(
-            self.get_user_by_username(user_name).get('id'))
+        sql_query_update_balance = "UPDATE Account SET balance = " + str(updated_balance) + " WHERE id = " + str(user_id)
 
         db_connect = sqlite3.connect(self.db_path)
 
