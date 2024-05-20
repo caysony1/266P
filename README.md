@@ -17,12 +17,12 @@ Instructions to run project. Order matters!
 3. Run the following commands:
 
     `cd server`\
-    `python3 -m venv .venv`\
+    `python3 -m venv venv`\
 
 4. Activate python's virtual environment (command is based on OS used!):
 
-    Windows: `.venv\Scripts\activate`\
-    macOS/Linux: `source .venv/bin/activate`
+    Windows: `venv\Scripts\activate`\
+    macOS/Linux: `source venv/bin/activate`
 
 5. In the virtual environment, utilize the package manager to install the 
 dependencies for this project:
