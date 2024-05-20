@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, request, jsonify
-from server.services.auth_service import AuthService
+from services.auth_service import AuthService
 
 user = Blueprint('user', __name__)
 

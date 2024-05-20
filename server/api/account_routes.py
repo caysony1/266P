@@ -1,6 +1,6 @@
 from flask import Blueprint, abort, request, jsonify
 
-from server.services.account_service import AccountService
+from services.account_service import AccountService
 
 account = Blueprint('account', __name__)
 
