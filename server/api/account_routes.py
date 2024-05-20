@@ -1,10 +1,12 @@
 from flask import Blueprint, abort, request, jsonify
+from flask_login import login_required
 
-from server.services.account_service import AccountService
+from services.account_service import AccountService
 
 account = Blueprint('account', __name__)
 
 @account.route('/view_balance', methods=['GET'])
+@login_required
 def view_balance():
     try:
         account_service = AccountService()
@@ -14,6 +16,7 @@ def view_balance():
         return abort(400, description = 'no balance fetched!')
     
 @account.route('/deposit', methods=['POST'])
+@login_required
 def deposit():
     try:
         request_data = request.get_json()
@@ -24,6 +27,7 @@ def deposit():
         return abort(400, description = 'deposit unsuccessful!')
     
 @account.route('/withdraw', methods=['POST'])
+@login_required
 def withdraw():
     try:
         request_data = request.get_json()

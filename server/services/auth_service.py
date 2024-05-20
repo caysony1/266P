@@ -1,4 +1,4 @@
-from models.login_user import LoginUser
+from flask_login import LoginManager
 from models.register_user import RegisterUser
 from database.db_controller import DBController
 
@@ -16,10 +16,15 @@ class AuthService:
     def __init__(self):
         pass
 
-    def get_user(self, user_name, password):
-        # get the user associated with the logged in session
-        login_user = LoginUser(user_name, password)
-        pass
+    def get_user(self, user_id):
+        dbc = DBController()
+        user = dbc.get_user_by_user_id(user_id)
+        return user
+    
+    def user_exists(self, user_name):
+        dbc = DBController()
+        existing_user = dbc.get_user_by_username(user_name)
+        return existing_user.get('id') is not None
 
     def register(self, user_name, password, first_name, last_name, account_balance):
         """
@@ -47,7 +52,3 @@ class AuthService:
         get_user_id = dbc.get_user_by_username(new_user.get_user_name()).get('id')
 
         dbc.insert_account(get_user_id, account_balance)
-
-    def login(self, user_name, password):
-        # perform authentication action and utilize the database
-        pass
