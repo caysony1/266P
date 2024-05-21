@@ -1,4 +1,4 @@
-import { ACCOUNT_API_BASE_URL } from '../constants/api.constants';
+import { ACCOUNT_API_BASE_URL, BASE_REQUEST_HEADERS } from '../constants/api.constants';
 
 export class AccountService {
     async viewBalance () {
