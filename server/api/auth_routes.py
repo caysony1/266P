@@ -1,3 +1,4 @@
+from flask_cors import CORS
 from flask import Blueprint, abort, request, jsonify
 from flask_login import LoginManager, login_required, login_user, logout_user
 from models.login_user import LoginUser
@@ -12,14 +13,14 @@ def load_user(user_id):
     user = auth_service.get_user(user_id)
     return user
 
-@auth.route('/login', methods=['POST'])
+@auth.route('/auth/login', methods=['POST'])
 def login():
     try:
         request_data = request.get_json()
         
         new_session_user = LoginUser(
             request_data.get('username'),
-            request_data.get('password'),
+            request_data.get('password')
         )
 
         is_authenticated = login_user(new_session_user, False, None, False, False)
@@ -28,10 +29,10 @@ def login():
             return jsonify({ 'message': 'Login success!' }), 200
         else:
             return jsonify({ 'message': 'Login failed!' }), 200
-    except:
-        return abort(500, description = 'Login service issue!')
+    except Exception as e:
+        return abort(400, description='There was an issue logging in: {}'.format(str(e)))
 
-@auth.route('/logout', methods=['GET'])
+@auth.route('/auth/logout', methods=['GET'])
 @login_required
 def logout():
     try:
@@ -41,18 +42,18 @@ def logout():
             return jsonify({ 'message': 'Logout success!' }), 200
         else:
             return jsonify({ 'message': 'Logout not successful!' }), 200   
-    except:
-        return abort(500, description = 'Log out service issue!')
+    except Exception as e:
+        return abort(500, description='There was an issue logging out: {}'.format(str(e)))
     
-@auth.route('/register', methods=['POST'])
+@auth.route('/auth/register', methods=['POST'])
 def register():
     try:
         request_data = request.get_json()
         
         user_name = request_data.get('username')
-        pass_word = request_data.get('password'),
-        first_name = request_data.get('firstname'),
-        last_name = request_data.get('lastname'),
+        pass_word = request_data.get('password')
+        first_name = request_data.get('firstname')
+        last_name = request_data.get('lastname')
         balance = request_data.get('balance')
 
         auth_service = AuthService()
@@ -63,5 +64,5 @@ def register():
 
         auth_service.register(user_name, pass_word, first_name, last_name, balance)
         return jsonify({ 'message': 'Account registration - Success!' }), 200
-    except:
-        return abort(500, description = 'Account registration - Service issue!')
+    except Exception as e:
+        return abort(500, description='There was an issue with registration: {}'.format(str(e)))

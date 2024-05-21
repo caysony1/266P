@@ -1,3 +1,4 @@
+from flask_cors import CORS
 from flask import Blueprint, abort, request, jsonify
 from flask_login import login_required
 
@@ -5,17 +6,17 @@ from services.account_service import AccountService
 
 account = Blueprint('account', __name__)
 
-@account.route('/view_balance', methods=['GET'])
+@account.route('/account/view_balance', methods=['GET'])
 @login_required
 def view_balance():
     try:
         account_service = AccountService()
         balance = account_service.view_balance()
         return jsonify({ 'balance': balance }), 200
-    except:
-        return abort(400, description = 'no balance fetched!')
+    except Exception as e:
+        return abort(500, description='There is an issue fetching the balance: {}'.format(str(e)))
     
-@account.route('/deposit', methods=['POST'])
+@account.route('/account/deposit', methods=['POST'])
 @login_required
 def deposit():
     try:
@@ -23,10 +24,10 @@ def deposit():
         account_service = AccountService()
         account_service.deposit(request_data.get('amount'))
         return jsonify({ 'message': 'withdraw success!' }), 200
-    except:
-        return abort(400, description = 'deposit unsuccessful!')
+    except Exception as e:
+        return abort(500, description='There is an issue depositing money: {}'.format(str(e)))
     
-@account.route('/withdraw', methods=['POST'])
+@account.route('/account/withdraw', methods=['POST'])
 @login_required
 def withdraw():
     try:
@@ -34,5 +35,5 @@ def withdraw():
         account_service = AccountService()
         account_service.withdraw(request_data.get('amount'))
         return jsonify({ 'message': 'withdraw success!' }), 200
-    except:
-        return abort(400, description = 'withdraw unsuccessful!')
+    except Exception as e:
+        return abort(500, description='There is an issue withdrawing money: {}'.format(str(e)))

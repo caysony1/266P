@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthService } from '../services/auth-service';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = () => {
-        // Authenticate User and Go to Home page
+    const routeNavigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const authService = new AuthService();
+        
+        authService.login(username, password)
+            .then(() => { 
+                routeNavigate('/home');
+            });
     };
 
     return (

@@ -1,8 +1,8 @@
-import { ACCOUNT_BASE_URL } from '../constants/api.constants';
+import { ACCOUNT_API_BASE_URL } from '../constants/api.constants';
 
 export class AccountService {
     async viewBalance () {
-        const requestUrl = `${ACCOUNT_BASE_URL}/view_balance`
+        const requestUrl = `${ACCOUNT_API_BASE_URL}/view_balance`
         
         await fetch(requestUrl, {
             method: 'GET',
@@ -11,7 +11,7 @@ export class AccountService {
     }
 
     async deposit (amount) {
-        const requestUrl = `${ACCOUNT_BASE_URL}/deposit`
+        const requestUrl = `${ACCOUNT_API_BASE_URL}/deposit`
         
         await fetch(requestUrl, {
             method: 'POST',
@@ -23,7 +23,7 @@ export class AccountService {
     }
 
     async withdraw (amount) {
-        const requestUrl = `${ACCOUNT_BASE_URL}/withdraw`
+        const requestUrl = `${ACCOUNT_API_BASE_URL}/withdraw`
         
         await fetch(requestUrl, {
             method: 'POST',

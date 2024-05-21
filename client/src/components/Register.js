@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthService } from '../services/auth-service';
 
 function Register() {
     const [firstName, setFirstName] = useState('');
@@ -7,9 +8,18 @@ function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [accBalance, setAccBalance] = useState(0);
+    
+    const routeNavigate = useNavigate();
 
-    const handleSubmit = () => {
-        // Register User and Go to Home page
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const authService = new AuthService();
+        
+        authService.register(username, password, firstName, lastName, accBalance)
+            .then(() => { 
+                routeNavigate('/home');
+            });
     }
 
     return (

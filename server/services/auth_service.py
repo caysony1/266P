@@ -24,7 +24,7 @@ class AuthService:
     def user_exists(self, user_name):
         dbc = DBController()
         existing_user = dbc.get_user_by_username(user_name)
-        return existing_user.get('id') is not None
+        return existing_user is not None
 
     def register(self, user_name, password, first_name, last_name, account_balance):
         """
