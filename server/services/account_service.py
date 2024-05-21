@@ -1,4 +1,4 @@
-from server.database.db_controller import DBController
+from database.db_controller import DBController
 
 '''
 Changelog: 
