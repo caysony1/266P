@@ -9,11 +9,49 @@ function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [accBalance, setAccBalance] = useState(0);
+    const [invalids, setInvalids] = useState({});
     
     const routeNavigate = useNavigate();
 
+    const isValid = (input) => {
+        const regex =  /^[_\-\.0-9a-z]+$/;
+        return regex.test(input) && input.length >= 1 && input.length <= 127;
+    }
+
+    const isValidNumeric = (input) => {
+        const regex = /^(0|[1-9][0-9]*)\.[0-9]{2}$/;
+        return regex.test(input) && parseFloat(input) >= 0 && parseFloat(input) <= 4294967295.99;
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const tempInvalids = {};
+
+        if (!isValid(firstName)) {
+            tempInvalids.fname = true;
+        }
+
+        if (!isValid(lastName)) {
+            tempInvalids.lname = true;
+        }
+        
+        if (!isValid(username)) {
+            tempInvalids.uname = true;
+        }
+        
+        if (!isValid(password)) {
+            tempInvalids.pword = true;
+        }
+
+        if (!isValidNumeric(accBalance)) {
+            tempInvalids.balance = true;
+        }
+
+        if (Object.keys(tempInvalids).length >= 1) {
+            setInvalids(tempInvalids);
+            return;
+        }
 
         const authService = new AuthService();
         
@@ -34,6 +72,7 @@ function Register() {
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                     />
+                    <p style={{ color: "red", marginLeft: "5px" }}>{invalids.fname ? "Invalid Input" : ""}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Last Name: </label>
@@ -42,6 +81,7 @@ function Register() {
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                     />
+                    <p style={{ color: "red", marginLeft: "5px" }}>{invalids.lname ? "Invalid Input" : ""}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Email Address: </label>
@@ -58,6 +98,7 @@ function Register() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
+                    <p style={{ color: "red", marginLeft: "5px" }}>{invalids.uname ? "Invalid Input" : ""}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Password: </label>
@@ -66,6 +107,7 @@ function Register() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <p style={{ color: "red", marginLeft: "5px" }}>{invalids.pword ? "Invalid Input" : ""}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Initial Account Balance (USD): </label>
@@ -74,6 +116,7 @@ function Register() {
                         value={accBalance}
                         onChange={(e) => setAccBalance(e.target.value)}
                     />
+                    <p style={{ color: invalids.balance ? "red" : "black", marginLeft: "5px" }}>{invalids.balance ? "Invalid Input" : "e.g. 5.00"}</p>
                 </div>
                 <button type="submit">Register</button>
             </form>
