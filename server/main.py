@@ -2,8 +2,10 @@ from flask import Flask
 from flask_cors import CORS
 from flask_login import LoginManager
 from database.schema import create_db
+from database.db_utils import add_default_accounts
 from api.auth_routes import auth
 from api.account_routes import account
+
 
 flask = Flask(__name__)
 flask.config['SECRET_KEY'] = 'lUBxSXchGZ'
@@ -22,6 +24,7 @@ def index():
 
 if __name__ == '__main__':
     create_db()
+    add_default_accounts()
 
     # register the flask endpoints
     flask.register_blueprint(auth)
