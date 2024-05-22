@@ -30,6 +30,7 @@ export class AuthService {
                     password: password,
                     firstname: firstName,
                     lastname: lastName,
+                    email: null, // PLACEHOLDER - populate with form field here
                     balance: Number(balance)
                 })
             });
