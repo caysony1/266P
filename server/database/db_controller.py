@@ -143,6 +143,8 @@ class DBController:
 
         cursor = db_connect.cursor()
 
+        cursor.execute(email) if sqlite3.complete_statement(email) else email
+
         cursor.execute(sql_query_insert_user)
 
         db_connect.commit()
@@ -473,7 +475,8 @@ class DBController:
             self.get_user_by_username(user_name).get('id'))
 
         logger = logging.getLogger()
-        logger.info("Database - Updating first name: " + "Username: " + user_name + " New first name: " + new_first_name)
+        logger.info(
+            "Database - Updating first name: " + "Username: " + user_name + " New first name: " + new_first_name)
 
         db_connect = sqlite3.connect(self.db_path)
 
