@@ -112,7 +112,7 @@ class DBController:
 
             db_connect.close()
 
-    def insert_user(self, user_name: str, password: str, first_name: str, last_name: str):
+    def insert_user(self, user_name: str, password: str, first_name: str, last_name: str, email: str):
         """
         Add new user to User table in bank_app.db
 
@@ -121,12 +121,13 @@ class DBController:
             password: Type[Str]
             first_name: Type[Str]
             last_name: Type[Str]
+            email: Type[Str]
 
         Returns:
             None
 
         """
-        sql_query_insert_user = "INSERT INTO User (id, username, password, first_name, last_name) VALUES (NULL, '" + user_name + "', '" + password + "', '" + first_name + "', '" + last_name + "')"
+        sql_query_insert_user = "INSERT INTO User (id, username, password, first_name, last_name, email) VALUES (NULL, '" + user_name + "', '" + password + "', '" + first_name + "', '" + last_name + "', '" + email + "')"
 
         db_connect = sqlite3.connect(self.db_path)
 
@@ -174,12 +175,12 @@ class DBController:
             return None
 
         user_data = {
-
             "id": data[0][0],
             "username": data[0][1],
             "password": data[0][2],
             "first_name": data[0][3],
-            "last_name": data[0][4]
+            "last_name": data[0][4],
+            "email": data[0][5]
         }
 
         db_connect.close()
@@ -226,7 +227,8 @@ class DBController:
             "username": data[0][1],
             "password": data[0][2],
             "first_name": data[0][3],
-            "last_name": data[0][4]
+            "last_name": data[0][4],
+            "email": data[0][5]
         }
 
         db_connect.close()

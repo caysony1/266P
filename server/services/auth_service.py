@@ -26,7 +26,7 @@ class AuthService:
         existing_user = dbc.get_user_by_username(user_name)
         return existing_user is not None
 
-    def register(self, user_name, password, first_name, last_name, account_balance):
+    def register(self, user_name, password, first_name, last_name, email, account_balance):
         """
         Add new user and account to bank database.
 
@@ -35,6 +35,7 @@ class AuthService:
             password: Type[Str]
             first_name: Type[Str]
             last_name: Type[Str]
+            email: Type[Str]
             account_balance: Type[Float]
 
         Returns:
@@ -42,12 +43,12 @@ class AuthService:
         """
         # perform action to put into the database - User and Accounts table
 
-        new_user = RegisterUser(user_name, password, first_name, last_name, account_balance)
+        new_user = RegisterUser(user_name, password, first_name, last_name, email, account_balance)
 
         dbc = DBController()
 
         dbc.insert_user(new_user.get_user_name(), new_user.get_password(), new_user.get_first_name(),
-                        new_user.get_last_name())
+                        new_user.get_last_name(), new_user.get_email())
 
         get_user_id = dbc.get_user_by_username(new_user.get_user_name()).get('id')
 

@@ -12,9 +12,9 @@ dbc = DBController()
 
 auth = AuthService()
 
-auth.register("admin", 'password1234', 'the', 'administrator', 100000.00)
+auth.register("admin", 'password1234', 'the', 'administrator', 'admin@admin.io', 100000.00)
 
-auth.register("usertest", 'password5678', 'foo', 'bar', 55000.50)
+auth.register("usertest", 'password5678', 'foo', 'bar', 'foo@bar.io', 55000.50)
 
 print("User table: ")
 dbc.inspect_user_table()

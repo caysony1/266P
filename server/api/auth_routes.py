@@ -54,6 +54,7 @@ def register():
         pass_word = request_data.get('password')
         first_name = request_data.get('firstname')
         last_name = request_data.get('lastname')
+        email = request_data.get('email')
         balance = request_data.get('balance')
 
         auth_service = AuthService()
@@ -62,7 +63,7 @@ def register():
         if user_exists:
            return jsonify({ 'message': 'User already exists. Aborting.' }), 200
 
-        auth_service.register(user_name, pass_word, first_name, last_name, balance)
+        auth_service.register(user_name, pass_word, first_name, last_name, email, balance)
         return jsonify({ 'message': 'Account registration - Success!' }), 200
     except Exception as e:
         return abort(500, description='There was an issue with registration: {}'.format(str(e)))
