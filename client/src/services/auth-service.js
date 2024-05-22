@@ -15,7 +15,7 @@ export class AuthService {
         })
     }
 
-    async register (username, password, firstName, lastName, balance) {
+    async register (username, password, firstName, lastName, email, balance) {
         const requestUrl = `${AUTH_API_BASE_URL}/register`;
     
         try {
@@ -30,7 +30,7 @@ export class AuthService {
                     password: password,
                     firstname: firstName,
                     lastname: lastName,
-                    email: null, // PLACEHOLDER - populate with form field here
+                    email: email,
                     balance: Number(balance)
                 })
             });

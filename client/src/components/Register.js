@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth-service';
 function Register() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [accBalance, setAccBalance] = useState(0);
@@ -16,7 +17,7 @@ function Register() {
 
         const authService = new AuthService();
         
-        authService.register(username, password, firstName, lastName, accBalance)
+        authService.register(username, password, firstName, lastName, email, accBalance)
             .then(() => { 
                 routeNavigate('/home');
             });
@@ -40,6 +41,14 @@ function Register() {
                         type="text" 
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
+                    />
+                </div>
+                <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+                    <label style={{ marginRight: "10px", width: "80px" }}>Email Address: </label>
+                    <input 
+                        type="text" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
