@@ -94,7 +94,7 @@ function Home() {
             e.preventDefault();
             const authService = new AuthService();
             await authService.logout();
-            routeNavigate('/login');
+            routeNavigate('/');
         }
         catch (e) {
             console.error(`error logging out: ${e}`);
