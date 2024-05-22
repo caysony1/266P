@@ -17,7 +17,7 @@ export class AccountService {
             method: 'POST',
             headers: BASE_REQUEST_HEADERS,
             body: {
-                'amount': amount
+                amount: amount
             }
         })
     }
@@ -29,7 +29,7 @@ export class AccountService {
             method: 'POST',
             headers: BASE_REQUEST_HEADERS,
             body: {
-                'amount': amount
+                amount: amount
             }
         })
     }

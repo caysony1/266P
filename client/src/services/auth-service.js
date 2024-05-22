@@ -9,8 +9,8 @@ export class AuthService {
             method: 'POST',
             headers: BASE_REQUEST_HEADERS,
             body: JSON.stringify({
-                'username': username,
-                'password': password
+                username: username,
+                password: password
             })
         })
     }
