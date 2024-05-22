@@ -16,15 +16,29 @@ class AuthService:
     def __init__(self):
         pass
 
-    def get_user(self, user_id):
+    def get_user(self, user_id: int):
         dbc = DBController()
         user = dbc.get_user_by_user_id(user_id)
+        return user
+    
+    def get_user_by_name(self, user_name: str):
+        dbc = DBController()
+        user = dbc.get_user_by_username(user_name)
         return user
     
     def user_exists(self, user_name):
         dbc = DBController()
         existing_user = dbc.get_user_by_username(user_name)
         return existing_user is not None
+    
+    def is_valid_credentials(self, user_name, password) -> bool:
+        dbc = DBController()
+        existing_user = dbc.get_user_by_username(user_name)
+
+        if existing_user is None:
+            return False
+
+        return existing_user.get('password') == password
 
     def register(self, user_name, password, first_name, last_name, email, account_balance):
         """

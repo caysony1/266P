@@ -1,4 +1,3 @@
-from flask_cors import CORS
 from flask import Blueprint, abort, request, jsonify
 from flask_login import login_required
 

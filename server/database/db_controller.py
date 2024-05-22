@@ -127,7 +127,7 @@ class DBController:
             None
 
         """
-        sql_query_insert_user = "INSERT INTO User (id, username, password, first_name, last_name, email) VALUES (NULL, '" + user_name + "', '" + password + "', '" + first_name + "', '" + last_name + "', '" + email + "')"
+        sql_query_insert_user = "INSERT OR IGNORE INTO User (id, username, password, first_name, last_name, email) VALUES (NULL, '" + user_name + "', '" + password + "', '" + first_name + "', '" + last_name + "', '" + email + "')"
 
         db_connect = sqlite3.connect(self.db_path)
 

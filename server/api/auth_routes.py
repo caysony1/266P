@@ -1,49 +1,64 @@
-from flask_cors import CORS
-from flask import Blueprint, abort, request, jsonify
+from flask import Blueprint, abort, request, jsonify, session
 from flask_login import LoginManager, login_required, login_user, logout_user
-from models.login_user import LoginUser
+from models.session_user import SessionUser
 from services.auth_service import AuthService
 
 auth = Blueprint('auth', __name__)
 login_manager = LoginManager()
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id: str):
     auth_service = AuthService()
-    user = auth_service.get_user(user_id)
-    return user
+    user = auth_service.get_user(int(user_id))
+
+    if user is None:
+        return None
+
+    return SessionUser(
+        user.get('id', 0),
+        user.get('username', ''),
+        user.get('first_name', ''),
+        user.get('last_name', ''),
+        user.get('email', '')
+    )
 
 @auth.route('/auth/login', methods=['POST'])
 def login():
     try:
         request_data = request.get_json()
-        
-        new_session_user = LoginUser(
-            request_data.get('username'),
-            request_data.get('password')
+        user_name = request_data.get('username')
+        password = request_data.get('password')
+
+        auth_service = AuthService()
+        is_valid = auth_service.is_valid_credentials(user_name, password)
+
+        if is_valid == False:
+            return jsonify({ 'message': 'Invalid username or password' }), 401
+
+        user = auth_service.get_user_by_name(user_name)
+
+        new_session_user = SessionUser(
+            user.get('id', 0),
+            user.get('username', ''),
+            user.get('first_name', ''),
+            user.get('last_name', ''),
+            user.get('email', '')
         )
 
-        is_authenticated = login_user(new_session_user, False, None, False, False)
-
-        if is_authenticated:
-            return jsonify({ 'message': 'Login success!' }), 200
-        else:
-            return jsonify({ 'message': 'Login failed!' }), 200
+        login_user(new_session_user, False, None, False, True)
+        return jsonify({ 'message': 'Log In - Success' }), 200
     except Exception as e:
-        return abort(400, description='There was an issue logging in: {}'.format(str(e)))
+        return abort(500, description='Log In - Failed: {}'.format(str(e)))
 
 @auth.route('/auth/logout', methods=['GET'])
 @login_required
 def logout():
     try:
-        is_logged_out = logout_user()
-
-        if is_logged_out:
-            return jsonify({ 'message': 'Logout success!' }), 200
-        else:
-            return jsonify({ 'message': 'Logout not successful!' }), 200   
+        session.clear()
+        logout_user()
+        return jsonify({ 'message': 'Logout success!' }), 200
     except Exception as e:
-        return abort(500, description='There was an issue logging out: {}'.format(str(e)))
+        return abort(500, description='Log In - Failed: {}'.format(str(e)))
     
 @auth.route('/auth/register', methods=['POST'])
 def register():
