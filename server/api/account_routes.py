@@ -22,10 +22,11 @@ def deposit():
         account_service = AccountService(current_user.get_id())
         request_data = request.get_json()
         amount = request_data.get('amount')
-        new_balance = account_service.deposit(amount)
+
+        account_service.deposit(amount)
+
         return jsonify({ 
-            'message': 'deposit success!',
-            'balance': new_balance
+            'message': 'deposit success!'
         }), 200
     except Exception as e:
         return abort(500, description='There is an issue depositing money: {}'.format(str(e)))
@@ -37,10 +38,11 @@ def withdraw():
         account_service = AccountService(current_user.get_id())
         request_data = request.get_json()
         amount = request_data.get('amount')
-        new_balance = account_service.withdraw(int(amount))
+        
+        account_service.withdraw(int(amount))
+
         return jsonify({ 
-            'message': 'withdraw success!',
-            'balance': new_balance
+            'message': 'withdraw success!'
         }), 200
     except Exception as e:
         return abort(500, description='There is an issue withdrawing money: {}'.format(str(e)))

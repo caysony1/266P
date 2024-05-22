@@ -79,6 +79,18 @@ def register():
            return jsonify({ 'message': 'User already exists. Aborting.' }), 200
 
         auth_service.register(user_name, pass_word, first_name, last_name, email, balance)
+
+        new_user = auth_service.get_user_by_name(user_name)
+
+        new_session_user = SessionUser(
+            new_user.get('id', 0),
+            new_user.get('username', ''),
+            new_user.get('first_name', ''),
+            new_user.get('last_name', ''),
+            new_user.get('email', '')
+        )
+
+        login_user(new_session_user, False, None, False, True)
         return jsonify({ 'message': 'Account registration - Success!' }), 200
     except Exception as e:
         return abort(500, description='There was an issue with registration: {}'.format(str(e)))

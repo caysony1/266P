@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AccountService } from '../services/account-service';
+import { AuthService } from '../services/auth-service';
 
 function Home() {
     // put reactive material here yada yada yada
     const [balance, setBalance] = useState(0);
     const [deposit, setDeposit] = useState(0);
     const [withdraw, setWithdraw] = useState(0);
+
+    const routeNavigate = useNavigate();
 
     useEffect(() => {
         retrieveBalance();
@@ -14,33 +18,50 @@ function Home() {
     const retrieveBalance = async () => {
         try {
             const accountService = new AccountService();
-
-            const res = await accountService.viewBalance();
-            setBalance(res.balance);
+            const result = await accountService.viewBalance();
+            setBalance(result.balance);
         } catch (e) {
             console.log("Error retrieving", e);
         }
     };
 
-    const handleDeposit = (e) => {
-        e.preventDefault();
+    const handleDeposit = async (e) => {
+        try {
+            e.preventDefault();
 
-        const accountService = new AccountService();
-
-        accountService.deposit(deposit).then(() => {
+            const accountService = new AccountService();
+            await accountService.deposit(deposit);
             retrieveBalance();
-        });
+        }
+        catch (e) {
+            console.error(`error withdrawing: ${e}`);
+        }
     };
 
-    const handleWithdraw = (e) => {
-        e.preventDefault();
+    const handleWithdraw = async (e) => {
+        try {
+            e.preventDefault();
 
-        const accountService = new AccountService();
-
-        accountService.withdraw(withdraw).then(() => {
+            const accountService = new AccountService();
+            await accountService.withdraw(withdraw);
             retrieveBalance();
-        });
+        }
+        catch (e) {
+            console.error(`error withdrawing: ${e}`);
+        }
     };
+
+    const handleLogout = async (e) => {
+        try {
+            e.preventDefault();
+            const authService = new AuthService();
+            await authService.logout();
+            routeNavigate('/login');
+        }
+        catch (e) {
+            console.error(`error logging out: ${e}`);
+        }
+    }
     
     return (
         <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -71,6 +92,8 @@ function Home() {
                 </div>
                 <button type="submit">Withdraw</button>
             </form>
+
+            <button onclick={handleLogout}>Log Out</button>
         </div>
     );
 }

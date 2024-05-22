@@ -25,7 +25,7 @@ class AccountService:
 
         return account_info.get('balance')
 
-    def deposit (self, amount) -> float:
+    def deposit (self, amount):
         dbc = DBController()
 
         account_info = dbc.get_account_by_user_id(self._userId.get_id())
@@ -36,12 +36,8 @@ class AccountService:
         current_balance = float(account_info.get('balance'))
         new_balance = current_balance + float(amount)
         dbc.update_balance(self._userId.get_id(), new_balance)
-        
-        updated_account = dbc.get_account_by_user_id(self._userId.get_id())
-        updated_balance = updated_account.get('balance')
-        return updated_balance
 
-    def withdraw (self, amount) -> float:
+    def withdraw (self, amount):
         dbc = DBController()
 
         account_info = dbc.get_account_by_user_id(self._userId.get_id())
@@ -56,7 +52,3 @@ class AccountService:
 
         new_balance = float(current_balance) - float(amount)
         dbc.update_balance(self._userId.get_id(), new_balance)
-
-        updated_account = dbc.get_account_by_user_id(self._userId.get_id())
-        updated_balance = updated_account.get('balance')
-        return updated_balance

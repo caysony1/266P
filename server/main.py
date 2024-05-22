@@ -16,7 +16,7 @@ flask.config['SECRET_KEY'] = 'lUBxSXchGZ'
 
 # only allow the client side (localhost:3000) to access the server
 # endpoints. does not matter the route within localhost:3000.
-CORS(flask, resources={r'/*': {'origins': 'http://localhost:3000'}})
+CORS(flask, resources={r'/*': {'origins': 'http://localhost:3000'}}, supports_credentials=True)
 
 flask.register_blueprint(auth)
 flask.register_blueprint(account)
