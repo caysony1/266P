@@ -56,8 +56,13 @@ function Register() {
         const authService = new AuthService();
         
         authService.register(username, password, firstName, lastName, email, accBalance)
-            .then(() => { 
-                routeNavigate('/home');
+            .then(() => {
+                try {
+                    routeNavigate('/home');
+                }
+                catch(e) {
+                    console.error('There was a problem with the register operation:', e);
+                }
             });
     }
 

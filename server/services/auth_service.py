@@ -75,6 +75,6 @@ class AuthService:
         get_user_id = dbc.get_user_by_username(new_user.get_user_name()).get('id')
 
         logger.info("AuthService - Adding new account!")
-        logger.info("User id: " + str(get_user_id) + " Starting balance: " + str(account_balance))
+        logger.info(f"User id: {get_user_id} Starting Balance: {account_balance}")
 
         dbc.insert_account(get_user_id, account_balance)

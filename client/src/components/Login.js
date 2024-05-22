@@ -15,7 +15,12 @@ function Login() {
         
         authService.login(username, password)
             .then(() => { 
-                routeNavigate('/home');
+                try {
+                    routeNavigate('/home');
+                }
+                catch(e) {
+                    console.error('There was a problem with the login operation:', e);
+                }
             });
     };
 

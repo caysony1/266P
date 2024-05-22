@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, request, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from services.account_service import AccountService
 
@@ -9,7 +9,7 @@ account = Blueprint('account', __name__)
 @login_required
 def view_balance():
     try:
-        account_service = AccountService()
+        account_service = AccountService(current_user.get_id())
         balance = account_service.view_balance()
         return jsonify({ 'balance': balance }), 200
     except Exception as e:
@@ -19,10 +19,14 @@ def view_balance():
 @login_required
 def deposit():
     try:
+        account_service = AccountService(current_user.get_id())
         request_data = request.get_json()
-        account_service = AccountService()
-        account_service.deposit(request_data.get('amount'))
-        return jsonify({ 'message': 'withdraw success!' }), 200
+        amount = request_data.get('amount')
+        new_balance = account_service.deposit(amount)
+        return jsonify({ 
+            'message': 'deposit success!',
+            'balance': new_balance
+        }), 200
     except Exception as e:
         return abort(500, description='There is an issue depositing money: {}'.format(str(e)))
     
@@ -30,9 +34,13 @@ def deposit():
 @login_required
 def withdraw():
     try:
+        account_service = AccountService(current_user.get_id())
         request_data = request.get_json()
-        account_service = AccountService()
-        account_service.withdraw(request_data.get('amount'))
-        return jsonify({ 'message': 'withdraw success!' }), 200
+        amount = request_data.get('amount')
+        new_balance = account_service.withdraw(int(amount))
+        return jsonify({ 
+            'message': 'withdraw success!',
+            'balance': new_balance
+        }), 200
     except Exception as e:
         return abort(500, description='There is an issue withdrawing money: {}'.format(str(e)))

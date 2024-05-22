@@ -1,4 +1,5 @@
 from database.db_controller import DBController
+from models.user_id import UserId
 
 '''
 Changelog: 
@@ -6,37 +7,44 @@ Changelog:
 '''
 
 class AccountService:
-    def __init__(self):
+    def __init__(self, userId: int):
+        self._userId = UserId(userId)
         pass
 
-    def get_account (user_id):
+    def get_account (self):
         dbc = DBController()
-        account_info = dbc.get_account_by_user_id(user_id)
+        account_info = dbc.get_account_by_user_id(self._userId.get_id())
         return account_info
 
-    def view_balance (user_id):
+    def view_balance (self):
         dbc = DBController()
-        account_info = dbc.get_account_by_user_id(user_id)
+        account_info = dbc.get_account_by_user_id(self._userId.get_id())
 
         if account_info is None:
             raise ValueError('Account could not be found.')
 
         return account_info.get('balance')
 
-    def deposit (user_id, amount):
+    def deposit (self, amount) -> float:
         dbc = DBController()
 
-        account_info = dbc.get_account_by_user_id(user_id)
+        account_info = dbc.get_account_by_user_id(self._userId.get_id())
 
         if account_info is None:
             raise ValueError('Account could not be found.')
 
-        dbc.update_balance(user_id, amount)
+        current_balance = float(account_info.get('balance'))
+        new_balance = current_balance + float(amount)
+        dbc.update_balance(self._userId.get_id(), new_balance)
+        
+        updated_account = dbc.get_account_by_user_id(self._userId.get_id())
+        updated_balance = updated_account.get('balance')
+        return updated_balance
 
-    def withdraw (user_id, amount):
+    def withdraw (self, amount) -> float:
         dbc = DBController()
 
-        account_info = dbc.get_account_by_user_id(user_id)
+        account_info = dbc.get_account_by_user_id(self._userId.get_id())
 
         if account_info is None:
             raise ValueError('Account could not be found.')
@@ -46,4 +54,9 @@ class AccountService:
         if (amount > current_balance):
             raise ValueError('The amount exceeds current balance in account')
 
-        dbc.update_balance(user_id, amount * -1)
+        new_balance = float(current_balance) - float(amount)
+        dbc.update_balance(self._userId.get_id(), new_balance)
+
+        updated_account = dbc.get_account_by_user_id(self._userId.get_id())
+        updated_balance = updated_account.get('balance')
+        return updated_balance

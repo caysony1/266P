@@ -18,6 +18,15 @@ flask.config['SECRET_KEY'] = 'lUBxSXchGZ'
 # endpoints. does not matter the route within localhost:3000.
 CORS(flask, resources={r'/*': {'origins': 'http://localhost:3000'}})
 
+flask.register_blueprint(auth)
+flask.register_blueprint(account)
+
+login_manager = LoginManager(flask)
+login_manager.init_app(flask)
+login_manager.user_loader(load_user)
+login_manager.login_message_category = "info"
+login_manager.login_message = 'Authorized area. Please log in to proceed.'
+
 # home page of the API server if one is interested
 # to check if it is alive
 @flask.route('/', )
@@ -40,12 +49,5 @@ if __name__ == '__main__':
 
     create_db()
     add_default_accounts()
-
-    flask.register_blueprint(auth)
-    flask.register_blueprint(account)
-
-    login_manager = LoginManager(flask)
-    login_manager.init_app(flask)
-    login_manager.user_loader(load_user)
 
     flask.run()
