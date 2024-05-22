@@ -69,6 +69,7 @@ function Register() {
     return (
         <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>Create Account</h1>
+            <p style={{ fontSize: "10px" }}><b>**Every field must be specified.**</b></p>
             <form onSubmit={handleSubmit}>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px"}}>
                     <label style={{ marginRight: "10px", width: "80px" }}>First Name: </label>

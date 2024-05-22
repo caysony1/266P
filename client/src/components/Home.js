@@ -8,12 +8,19 @@ function Home() {
     const [balance, setBalance] = useState(0);
     const [deposit, setDeposit] = useState(0);
     const [withdraw, setWithdraw] = useState(0);
+    const [email, setEmail] = useState('');
 
     const routeNavigate = useNavigate();
 
     useEffect(() => {
+        retrieveEmail();
         retrieveBalance();
     }, []);
+
+    const retrieveEmail = async () => {
+        // setEmail("testing@123.com");
+        // Get user's email
+    }
 
     const retrieveBalance = async () => {
         try {
@@ -64,6 +71,14 @@ function Home() {
     }
     
     return (
+        <>
+        <div>
+            <p style={{  display: "inline", fontSize: "13px" }}><b>Account Email: </b></p>
+            <div style={{ display: "inline", fontSize: "13px" }} dangerouslySetInnerHTML={{  __html: email }}></div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px", marginRight: "20px" }}>
+            <button onClick={handleLogout}>Log Out</button>
+        </div>
         <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>Your Wallet</h1>
             <div style={{ marginBottom: "20px" }}><b>Account Balance: ${balance}</b></div>
@@ -92,9 +107,8 @@ function Home() {
                 </div>
                 <button type="submit">Withdraw</button>
             </form>
-
-            <button onclick={handleLogout}>Log Out</button>
         </div>
+        </>
     );
 }
 
