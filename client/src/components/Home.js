@@ -27,6 +27,14 @@ function Home() {
     const retrieveEmail = async () => {
         // setEmail("testing@123.com");
         // Get user's email
+
+        try {
+            const accountService = new AccountService();
+            const result = await accountService.viewEmail();
+            setEmail(result.email);
+        } catch (e) {
+            console.log("Error retrieving email", e);
+        }
     }
 
     const retrieveBalance = async () => {
@@ -35,7 +43,7 @@ function Home() {
             const result = await accountService.viewBalance();
             setBalance(result.balance);
         } catch (e) {
-            console.log("Error retrieving", e);
+            console.log("Error retrieving balance", e);
         }
     };
 
