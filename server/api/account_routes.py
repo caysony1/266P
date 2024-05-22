@@ -6,7 +6,7 @@ from services.account_service import AccountService
 account = Blueprint('account', __name__)
 
 @account.route('/account/view_balance', methods=['GET'])
-# @login_required
+@login_required
 def view_balance():
     try:
         account_service = AccountService()
@@ -16,7 +16,7 @@ def view_balance():
         return abort(500, description='There is an issue fetching the balance: {}'.format(str(e)))
     
 @account.route('/account/deposit', methods=['POST'])
-# @login_required
+@login_required
 def deposit():
     try:
         request_data = request.get_json()
@@ -27,7 +27,7 @@ def deposit():
         return abort(500, description='There is an issue depositing money: {}'.format(str(e)))
     
 @account.route('/account/withdraw', methods=['POST'])
-# @login_required
+@login_required
 def withdraw():
     try:
         request_data = request.get_json()

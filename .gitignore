@@ -1,6 +1,7 @@
 **/.DS_Store
 server/.venv/
-bank_app.db
+**/bank_app.db
+**/bank_app.log
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/266P.iml
 **/__pycache__

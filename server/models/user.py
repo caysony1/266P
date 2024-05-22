@@ -1,4 +1,3 @@
-from flask_login import UserMixin
 from models.user_id import UserId
 from utils.string_utils import is_not_null_or_empty
 

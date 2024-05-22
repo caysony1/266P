@@ -222,10 +222,10 @@ class DBController:
 
         """
 
-        sql_query_get_user = "SELECT * FROM User WHERE id = " + str(user_id)
+        sql_query_get_user = f"SELECT * FROM User WHERE id = {user_id};"
 
         logger = logging.getLogger()
-        logger.info("Database - Attempting to get user by user ID: " + user_id)
+        logger.info(f"Database - Attempting to get user by user ID: {user_id}")
 
         db_connect = sqlite3.connect(self.db_path)
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request, jsonify, session
+from flask import Blueprint, abort, jsonify, request, session
 from flask_login import LoginManager, login_required, login_user, logout_user
 from models.session_user import SessionUser
 from services.auth_service import AuthService
@@ -7,9 +7,9 @@ auth = Blueprint('auth', __name__)
 login_manager = LoginManager()
 
 @login_manager.user_loader
-def load_user(user_id: str):
+def load_user(id: int):
     auth_service = AuthService()
-    user = auth_service.get_user(int(user_id))
+    user = auth_service.get_user(id)
 
     if user is None:
         return None
