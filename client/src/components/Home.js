@@ -15,8 +15,8 @@ function Home() {
         try {
             const accountService = new AccountService();
 
-            const res = await accountService.viewBalance(); // What is the res?
-            setBalance(res);
+            const res = await accountService.viewBalance();
+            setBalance(res.balance);
         } catch (e) {
             console.log("Error retrieving", e);
         }
