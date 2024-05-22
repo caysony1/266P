@@ -9,8 +9,15 @@ function Home() {
     const [deposit, setDeposit] = useState(0);
     const [withdraw, setWithdraw] = useState(0);
     const [email, setEmail] = useState('');
+    const [invalidDeposit, setInvalidDeposit] = useState(false);
+    const [invalidWithdraw, setInvalidWithdraw] = useState(false);
 
     const routeNavigate = useNavigate();
+
+    const isValidNumeric = (input) => {
+        const regex = /^(0|[1-9][0-9]*)\.[0-9]{2}$/;
+        return regex.test(input) && parseFloat(input) >= 0 && parseFloat(input) <= 4294967295.99;
+    }
 
     useEffect(() => {
         retrieveEmail();
@@ -33,8 +40,16 @@ function Home() {
     };
 
     const handleDeposit = async (e) => {
+        e.preventDefault();
+
+        if (!isValidNumeric(deposit)) {
+            setInvalidDeposit(true);
+            return;
+        }
+        setInvalidDeposit(false);
+        
         try {
-            e.preventDefault();
+            // e.preventDefault();
 
             const accountService = new AccountService();
             await accountService.deposit(deposit);
@@ -46,8 +61,16 @@ function Home() {
     };
 
     const handleWithdraw = async (e) => {
+        e.preventDefault();
+
+        if (!isValidNumeric(withdraw)) {
+            setInvalidWithdraw(true);
+            return;
+        }
+        setInvalidWithdraw(false);
+
         try {
-            e.preventDefault();
+            // e.preventDefault();
 
             const accountService = new AccountService();
             await accountService.withdraw(withdraw);
@@ -91,6 +114,7 @@ function Home() {
                         onChange={(e) => setDeposit(e.target.value)}
                         min="0"
                     />
+                    <p style={{ color: invalidDeposit ? "red" : "black", marginLeft: "5px" }}>{invalidDeposit ? "Invalid Input" : " e.g. \"100.00\""}</p>
                 </div>
                 <button type="submit">Deposit</button>
             </form>
@@ -104,6 +128,7 @@ function Home() {
                         onChange={(e) => setWithdraw(e.target.value)}
                         min="0"
                     />
+                    <p style={{ color: invalidWithdraw ? "red" : "black", marginLeft: "5px" }}>{invalidWithdraw ? "Invalid Input" : " e.g. \"100.00\""}</p>
                 </div>
                 <button type="submit">Withdraw</button>
             </form>
