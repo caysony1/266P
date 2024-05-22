@@ -1,6 +1,7 @@
 from flask import Blueprint, abort, request, jsonify
 from flask_login import login_required, current_user
 
+from services.auth_service import AuthService
 from services.account_service import AccountService
 
 account = Blueprint('account', __name__)
@@ -46,3 +47,14 @@ def withdraw():
         }), 200
     except Exception as e:
         return abort(500, description='There is an issue withdrawing money: {}'.format(str(e)))
+    
+@account.route('/account/view_email', methods=['GET'])
+@login_required
+def view_email():
+    try:
+        auth_service = AuthService()
+        user = auth_service.get_user(current_user.get_id())
+        email_address = user.get('email')
+        return jsonify({ 'email': email_address }), 200
+    except Exception as e:
+        return abort(500, description='There is an issue fetching email info: {}'.format(str(e)))
