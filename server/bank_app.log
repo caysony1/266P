@@ -1,0 +1,43 @@
+2024-05-22 01:18:40,763 - root - INFO - Database - Inserting user
+2024-05-22 01:18:40,768 - root - INFO - AuthService - Registering new user!
+2024-05-22 01:18:40,768 - root - INFO - Username: admin, Password: password1234, First name: the, Last name: administrator, Email: admin@admin.io
+2024-05-22 01:18:40,768 - root - INFO - Database - Attempting to get user by username: admin
+2024-05-22 01:18:40,769 - root - INFO - AuthService - Adding new account!
+2024-05-22 01:18:40,769 - root - INFO - User id: 1 Starting balance: 100000.0
+2024-05-22 01:18:40,769 - root - INFO - Database - Inserting new account: user_id: 1 balance: 100000.0
+2024-05-22 01:18:40,774 - root - INFO - Database - Inserting user
+2024-05-22 01:18:40,778 - root - INFO - AuthService - Registering new user!
+2024-05-22 01:18:40,779 - root - INFO - Username: usertest, Password: mynameisfoo, First name: foo, Last name: bar, Email: foo@bar.io
+2024-05-22 01:18:40,779 - root - INFO - Database - Attempting to get user by username: usertest
+2024-05-22 01:18:40,780 - root - INFO - AuthService - Adding new account!
+2024-05-22 01:18:40,780 - root - INFO - User id: 2 Starting balance: 55000.5
+2024-05-22 01:18:40,780 - root - INFO - Database - Inserting new account: user_id: 2 balance: 55000.5
+2024-05-22 01:18:40,783 - root - INFO - Database - Inserting user
+2024-05-22 01:18:40,787 - root - INFO - AuthService - Registering new user!
+2024-05-22 01:18:40,787 - root - INFO - Username: moneyiscool, Password: money123, First name: beff, Last name: jezos, Email: beff@jezos.io
+2024-05-22 01:18:40,788 - root - INFO - Database - Attempting to get user by username: moneyiscool
+2024-05-22 01:18:40,789 - root - INFO - AuthService - Adding new account!
+2024-05-22 01:18:40,790 - root - INFO - User id: 3 Starting balance: 2073000001.25
+2024-05-22 01:18:40,790 - root - INFO - Database - Inserting new account: user_id: 3 balance: 2073000001.25
+2024-05-22 01:18:40,794 - root - INFO - Database - Inserting user
+2024-05-22 01:18:40,798 - root - INFO - AuthService - Registering new user!
+2024-05-22 01:18:40,798 - root - INFO - Username: grandpajoe, Password: goldentix, First name: joseph, Last name: bucket, Email: jbucket@wonka.io
+2024-05-22 01:18:40,798 - root - INFO - Database - Attempting to get user by username: grandpajoe
+2024-05-22 01:18:40,799 - root - INFO - AuthService - Adding new account!
+2024-05-22 01:18:40,799 - root - INFO - User id: 4 Starting balance: 0.75
+2024-05-22 01:18:40,799 - root - INFO - Database - Inserting new account: user_id: 4 balance: 0.75
+2024-05-22 01:18:40,803 - root - INFO - Database - Inserting user
+2024-05-22 01:18:40,807 - root - INFO - AuthService - Registering new user!
+2024-05-22 01:18:40,807 - root - INFO - Username: bank_user_01, Password: strongpassword, First name: john, Last name: smith, Email: john@smith.io
+2024-05-22 01:18:40,808 - root - INFO - Database - Attempting to get user by username: bank_user_01
+2024-05-22 01:18:40,808 - root - INFO - AuthService - Adding new account!
+2024-05-22 01:18:40,809 - root - INFO - User id: 5 Starting balance: 75000.25
+2024-05-22 01:18:40,809 - root - INFO - Database - Inserting new account: user_id: 5 balance: 75000.25
+2024-05-22 01:18:40,813 - root - INFO - Database - Inserting user
+2024-05-22 01:18:40,817 - root - INFO - AuthService - Registering new user!
+2024-05-22 01:18:40,817 - root - INFO - Username: bank_user_02, Password: evenstrongerpassword, First name: jane, Last name: doe, Email: jane@doe.io
+2024-05-22 01:18:40,819 - root - INFO - Database - Attempting to get user by username: bank_user_02
+2024-05-22 01:18:40,819 - root - INFO - AuthService - Adding new account!
+2024-05-22 01:18:40,819 - root - INFO - User id: 6 Starting balance: 120000.75
+2024-05-22 01:18:40,820 - root - INFO - Database - Inserting new account: user_id: 6 balance: 120000.75
+2024-05-22 01:18:40,836 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)

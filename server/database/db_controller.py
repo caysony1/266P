@@ -1,5 +1,6 @@
 from os.path import join, dirname, abspath
 import sqlite3
+import logging
 
 '''
 Changelog: 
@@ -50,6 +51,9 @@ class DBController:
 
         cursor = db_connect.cursor()
 
+        logger = logging.getLogger()
+        logger.info("Database - Inspecting User table")
+
         sql_query = """SELECT * FROM User"""
 
         for user in cursor.execute(sql_query):
@@ -69,6 +73,9 @@ class DBController:
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
+
+        logger = logging.getLogger()
+        logger.info("Database - Inspecting Account table")
 
         sql_query = """SELECT * FROM Account"""
 
@@ -129,6 +136,9 @@ class DBController:
         """
         sql_query_insert_user = "INSERT OR IGNORE INTO User (id, username, password, first_name, last_name, email) VALUES (NULL, '" + user_name + "', '" + password + "', '" + first_name + "', '" + last_name + "', '" + email + "')"
 
+        logger = logging.getLogger()
+        logger.info("Database - Inserting user")
+
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
@@ -162,6 +172,9 @@ class DBController:
         """
 
         sql_query_get_user = "SELECT * FROM User WHERE username = '" + user_name + "';"
+
+        logger = logging.getLogger()
+        logger.info("Database - Attempting to get user by username: " + user_name)
 
         db_connect = sqlite3.connect(self.db_path)
 
@@ -211,6 +224,9 @@ class DBController:
 
         sql_query_get_user = "SELECT * FROM User WHERE id = " + str(user_id)
 
+        logger = logging.getLogger()
+        logger.info("Database - Attempting to get user by user ID: " + user_id)
+
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
@@ -259,6 +275,9 @@ class DBController:
         sql_query_get_account = "SELECT * FROM Account WHERE id = " + str(
             self.get_user_by_username(user_name).get('id'))
 
+        logger = logging.getLogger()
+        logger.info("Database - Attempting to get account by username: " + user_name)
+
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
@@ -300,6 +319,9 @@ class DBController:
         """
         sql_query_get_account = "SELECT * FROM Account WHERE user_id = " + str(user_id)
 
+        logger = logging.getLogger()
+        logger.info("Database - Attempting to get account by user ID: " + str(user_id))
+
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
@@ -334,6 +356,9 @@ class DBController:
         sql_query_insert_account = "INSERT INTO Account (user_id, balance) VALUES ('" + str(
             user_id) + "', '" + str(balance) + "')"
 
+        logger = logging.getLogger()
+        logger.info("Database - Inserting new account: " + "user_id: " + str(user_id) + " balance: " + str(balance))
+
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
@@ -356,7 +381,12 @@ class DBController:
             None
 
         """
-        sql_query_update_balance = "UPDATE Account SET balance = " + str(updated_balance) + " WHERE id = " + str(user_id)
+        sql_query_update_balance = "UPDATE Account SET balance = " + str(updated_balance) + " WHERE id = " + str(
+            user_id)
+
+        logger = logging.getLogger()
+        logger.info(
+            "Database - Updating balance: " + "user_id: " + user_id + " updated balance: " + str(updated_balance))
 
         db_connect = sqlite3.connect(self.db_path)
 
@@ -382,6 +412,9 @@ class DBController:
         """
         sql_query_update_password = "UPDATE User SET password = '" + new_password + "' WHERE id = " + str(
             self.get_user_by_username(user_name).get('id'))
+
+        logger = logging.getLogger()
+        logger.info("Database - Updating password: " + user_name + " New password: " + new_password)
 
         db_connect = sqlite3.connect(self.db_path)
 
@@ -409,6 +442,10 @@ class DBController:
         sql_query_update_username = "UPDATE User SET username = '" + new_user_name + "' WHERE id = " + str(
             self.get_user_by_username(user_name).get('id'))
 
+        logger = logging.getLogger()
+        logger.info(
+            "Database - Updating username: " + "Current username: " + user_name + " New username: " + new_user_name)
+
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
@@ -435,6 +472,9 @@ class DBController:
         sql_query_update_firstname = "UPDATE User SET first_name = '" + new_first_name + "' WHERE id = " + str(
             self.get_user_by_username(user_name).get('id'))
 
+        logger = logging.getLogger()
+        logger.info("Database - Updating first name: " + "Username: " + user_name + " New first name: " + new_first_name)
+
         db_connect = sqlite3.connect(self.db_path)
 
         cursor = db_connect.cursor()
@@ -459,6 +499,10 @@ class DBController:
         """
         sql_query_update_name = "UPDATE User SET last_name = '" + new_last_name + "' WHERE id = " + str(
             self.get_user_by_username(user_name).get('id'))
+
+        logger = logging.getLogger()
+        logger.info(
+            "Database - Updating last name: " + "Username: " + user_name + " New last name: " + new_last_name)
 
         db_connect = sqlite3.connect(self.db_path)
 
