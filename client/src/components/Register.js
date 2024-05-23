@@ -9,7 +9,7 @@ function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [accBalance, setAccBalance] = useState(0);
-    const [invalids, setInvalids] = useState({});
+    const [invalids, setInvalids] = useState(false);
     
     const routeNavigate = useNavigate();
 
@@ -23,7 +23,7 @@ function Register() {
         return regex.test(input) && parseFloat(input) >= 0 && parseFloat(input) <= 4294967295.99;
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         const tempInvalids = {};
@@ -55,13 +55,22 @@ function Register() {
 
         const authService = new AuthService();
         
-        await authService.register(username, password, firstName, lastName, email, accBalance);
-        routeNavigate('/home');
+        authService.register(username, password, firstName, lastName, email, accBalance)
+        .then(() => {
+            setInvalids(false);
+            routeNavigate('/home');
+        })
+        .catch((e) => {
+            console.error('Register issue occurred:', e);
+            setInvalids(true);
+        });
     }
 
     return (
         <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>Create Account</h1>
+            <p style={{ color: "red", marginLeft: "5px", marginBottom: "5px", fontSize: "10px" }}>{invalids ? "Username is already taken" : ""}</p>
+
             <p style={{ fontSize: "10px" }}><b>**Every field must be specified.**</b></p>
             <ul style={{ fontSize: "10px", textAlign: "left", marginBottom: "20px" }}>
                 <li style={{ marginBottom: "5px" }}><b>first name, last name, username, and password must contain only underscores, hyphens, dots, digits, and lowercase alphabetical characters</b></li>
