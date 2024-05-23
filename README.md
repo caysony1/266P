@@ -31,18 +31,22 @@ dependencies for this project:
 
 6. Run the following to activate the server-side application:
 
-    `python3 main.py`
+    `python3 main.py` or `python main.py`
 
 ### Run the Client Side Project
 
 1. In a separate Terminal window (this is important!), go back to the root directory of this project (266P)
 
-2. Run the following commands:
+2. Please download Node.js if it is not on your machine yet. Go to (pick the right OS!):
+
+   https://nodejs.org/en/download/package-manager
+
+4. Run the following commands:
 
     `cd client`\
     `npm install`
 
-3. Run the client side application
+5. Run the client side application
 
     `npm run build`\
     `npm run start`
