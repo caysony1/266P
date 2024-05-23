@@ -36,6 +36,7 @@ class AccountService:
 
         current_balance = round_currency(float(account_info.get('balance')))
         currency_amount = round_currency(amount)
+        
         new_balance = current_balance + currency_amount
         dbc.update_balance(self._userId.get_id(), new_balance)
 
@@ -48,10 +49,10 @@ class AccountService:
             raise ValueError('Account could not be found.')
 
         current_balance = round_currency(float(account_info.get('balance')))
+        currency_amount = round_currency(amount)
 
-        if (amount > current_balance):
+        if (currency_amount > current_balance):
             raise ValueError('The amount exceeds current balance in account')
 
-        currency_amount = round_currency(amount)
         new_balance = current_balance - currency_amount
         dbc.update_balance(self._userId.get_id(), new_balance)

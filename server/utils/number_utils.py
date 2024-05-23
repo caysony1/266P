@@ -23,4 +23,4 @@ def is_positive(input_value):
     
 def round_currency(value):
     factor = 10 ** 2
-    return math.floor(value * factor) / factor
+    return math.floor(float(value) * factor) / factor

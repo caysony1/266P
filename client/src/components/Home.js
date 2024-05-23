@@ -112,7 +112,7 @@ function Home() {
         </div>
         <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>Your Wallet</h1>
-            <div style={{ marginBottom: "20px" }}><b>Account Balance: ${balance}</b></div>
+            <div style={{ marginBottom: "20px" }}><b>Account Balance: ${balance.toFixed(2)}</b></div>
             <form onSubmit={handleDeposit} style={{ marginBottom: "40px" }}>
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Deposit (USD): </label>
