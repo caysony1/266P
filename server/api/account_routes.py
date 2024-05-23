@@ -40,7 +40,7 @@ def withdraw():
         request_data = request.get_json()
         amount = request_data.get('amount')
         
-        account_service.withdraw(int(amount))
+        account_service.withdraw(amount)
 
         return jsonify({ 
             'message': 'withdraw success!'

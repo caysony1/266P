@@ -1,5 +1,6 @@
 from database.db_controller import DBController
 from models.user_id import UserId
+from utils.number_utils import round_currency
 
 '''
 Changelog: 
@@ -23,7 +24,7 @@ class AccountService:
         if account_info is None:
             raise ValueError('Account could not be found.')
 
-        return account_info.get('balance')
+        return round_currency(account_info.get('balance'))
 
     def deposit (self, amount):
         dbc = DBController()
@@ -33,8 +34,9 @@ class AccountService:
         if account_info is None:
             raise ValueError('Account could not be found.')
 
-        current_balance = float(account_info.get('balance'))
-        new_balance = current_balance + float(amount)
+        current_balance = round_currency(float(account_info.get('balance')))
+        currency_amount = round_currency(amount)
+        new_balance = current_balance + currency_amount
         dbc.update_balance(self._userId.get_id(), new_balance)
 
     def withdraw (self, amount):
@@ -45,10 +47,11 @@ class AccountService:
         if account_info is None:
             raise ValueError('Account could not be found.')
 
-        current_balance = account_info.get('balance')
+        current_balance = round_currency(float(account_info.get('balance')))
 
         if (amount > current_balance):
             raise ValueError('The amount exceeds current balance in account')
 
-        new_balance = float(current_balance) - float(amount)
+        currency_amount = round_currency(amount)
+        new_balance = current_balance - currency_amount
         dbc.update_balance(self._userId.get_id(), new_balance)
