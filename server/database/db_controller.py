@@ -134,7 +134,7 @@ class DBController:
             None
 
         """
-        sql_query_insert_user = "INSERT OR IGNORE INTO User (id, username, password, first_name, last_name, email) VALUES (NULL, '" + user_name + "', '" + password + "', '" + first_name + "', '" + last_name + "', '" + email + "');"
+        sql_query_insert_user = "INSERT OR IGNORE INTO User (id, username, password, first_name, last_name, email) VALUES (NULL, ?, ?, ?, ?, ?);"
 
         logger = logging.getLogger()
         logger.info("Database - Inserting user")
@@ -145,7 +145,8 @@ class DBController:
 
         cursor.execute(email) if sqlite3.complete_statement(email) else email
 
-        cursor.execute(sql_query_insert_user)
+        parameters = (user_name, password, first_name, last_name, email)
+        cursor.execute(sql_query_insert_user, parameters)
 
         db_connect.commit()
 
