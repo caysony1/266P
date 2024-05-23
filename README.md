@@ -17,7 +17,7 @@ Instructions to run project. Order matters!
 3. Run the following commands:
 
     `cd server`\
-    `python3 -m venv .venv`
+    `python3 -m venv .venv` or `python -m venv .venv`
 
 4. Activate python's virtual environment (command is based on OS used!):
 
