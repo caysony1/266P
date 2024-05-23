@@ -117,7 +117,7 @@ function Home() {
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Deposit (USD): </label>
                     <input 
-                        type="number" 
+                        type="text" 
                         value={deposit}
                         onChange={(e) => setDeposit(e.target.value)}
                         min="0"
@@ -131,7 +131,7 @@ function Home() {
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Withdraw (USD): </label>
                     <input 
-                        type="number" 
+                        type="text" 
                         value={withdraw}
                         onChange={(e) => setWithdraw(e.target.value)}
                         min="0"

@@ -70,6 +70,11 @@ function Register() {
         <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>Create Account</h1>
             <p style={{ fontSize: "10px" }}><b>**Every field must be specified.**</b></p>
+            <ul style={{ fontSize: "10px", textAlign: "left", marginBottom: "20px" }}>
+                <li style={{ marginBottom: "5px" }}><b>first name, last name, username, and password must contain only underscores, hyphens, dots, digits, and lowercase alphabetical characters</b></li>
+                <li style={{ marginBottom: "5px" }}><b>first name, last name, username, and password must be between 1 and 127 characters long</b></li>
+                <li><b>numeric inputs must contain two decimal places</b></li>
+            </ul>
             <form onSubmit={handleSubmit}>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px"}}>
                     <label style={{ marginRight: "10px", width: "80px" }}>First Name: </label>
@@ -118,7 +123,7 @@ function Register() {
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Initial Account Balance (USD): </label>
                     <input 
-                        type="number" 
+                        type="text" 
                         value={accBalance}
                         onChange={(e) => setAccBalance(e.target.value)}
                     />
