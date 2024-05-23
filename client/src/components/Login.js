@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth-service';
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [invalidCred, setInvalidCred] = useState(false);
 
     const routeNavigate = useNavigate();
 
@@ -15,19 +16,19 @@ function Login() {
         
         authService.login(username, password)
             .then(() => { 
-                try {
-                    routeNavigate('/home');
-                }
-                catch(e) {
-                    console.error('There was a problem with the login operation:', e);
-                }
+                routeNavigate('/home');
+            })
+            .catch((e) => {
+                console.error('There was a problem with the login operation:', e);
+                setInvalidCred(true);
             });
     };
 
     return (
         <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>SWE 266P - Bank App</h1>
-            <h2>Login</h2>
+            <h2 style={{ marginBottom: "5px" }}>Login</h2>
+            <p style={{ color: "red", marginLeft: "5px", marginBottom: "5px", fontSize: "10px" }}>{invalidCred ? "Invalid Login Credentials" : ""}</p>
             <form onSubmit={handleSubmit}>
                 <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Username: </label>

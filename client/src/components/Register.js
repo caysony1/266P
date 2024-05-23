@@ -122,7 +122,7 @@ function Register() {
                         value={accBalance}
                         onChange={(e) => setAccBalance(e.target.value)}
                     />
-                    <p style={{ color: invalids.balance ? "red" : "black", marginLeft: "5px" }}>{invalids.balance ? "Invalid Input" : "e.g. 5.00"}</p>
+                    <p style={{ color: invalids.balance ? "red" : "black", marginLeft: "5px" }}>{invalids.balance ? "Invalid Input" : "e.g. \"5.00\""}</p>
                 </div>
                 <button type="submit">Register</button>
             </form>
