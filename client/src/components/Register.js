@@ -23,7 +23,7 @@ function Register() {
         return regex.test(input) && parseFloat(input) >= 0 && parseFloat(input) <= 4294967295.99;
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const tempInvalids = {};
@@ -55,15 +55,8 @@ function Register() {
 
         const authService = new AuthService();
         
-        authService.register(username, password, firstName, lastName, email, accBalance)
-            .then(() => {
-                try {
-                    routeNavigate('/home');
-                }
-                catch(e) {
-                    console.error('There was a problem with the register operation:', e);
-                }
-            });
+        await authService.register(username, password, firstName, lastName, email, accBalance);
+        routeNavigate('/home');
     }
 
     return (

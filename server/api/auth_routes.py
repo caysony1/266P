@@ -76,7 +76,7 @@ def register():
         user_exists = auth_service.user_exists(user_name)
 
         if user_exists:
-           return jsonify({ 'message': 'User already exists. Aborting.' }), 200
+           return jsonify({ 'message': 'User already exists. Aborting.' }), 400
 
         auth_service.register(user_name, pass_word, first_name, last_name, email, balance)
 
