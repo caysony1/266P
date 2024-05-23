@@ -5,3 +5,4 @@ server/.venv/
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/266P.iml
 **/__pycache__
+server/database/db_working_01.py
