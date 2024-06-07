@@ -345,7 +345,7 @@ class DBController:
 
         """
 
-        sql_query_insert_account = "INSERT INTO Account (id, user_id, balance) VALUES (NULL, ?, ?)"
+        sql_query_insert_account = "INSERT INTO Account (id, user_id, balance) VALUES (NULL, ?, ?);"
 
         logger = logging.getLogger()
         logger.info(f"Database - Inserting new account: user_id: {user_id}")
