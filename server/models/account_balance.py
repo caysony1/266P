@@ -1,10 +1,8 @@
 from utils.number_utils import is_positive
+from models.final import Final
 
 class AccountBalance:
-    #constructor
-    def __init__(self, account_balance):
-        self._account_balance = is_positive(account_balance)
+    balance: float = Final()
 
-    #accessors
-    def get_account_balance(self):
-        return self._account_balance
+    def __init__(self, account_balance: float):
+        self.balance = is_positive(account_balance)

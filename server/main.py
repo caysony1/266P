@@ -7,8 +7,6 @@ from api.auth_routes import auth, load_user
 from api.account_routes import account
 import logging
 
-from services.auth_service import AuthService
-
 logger = logging.getLogger(__name__)
 
 flask = Flask(__name__)

@@ -1,7 +1,13 @@
 from flask import Blueprint, abort, jsonify, request, session
 from flask_login import LoginManager, login_required, login_user, logout_user
 from models.session_user import SessionUser
+from models.user_id import UserId
 from services.auth_service import AuthService
+
+'''
+Changelog: (FIX PHASE)
+    06/09/24 - ensured SessionUser object is using best-practices
+'''
 
 auth = Blueprint('auth', __name__)
 login_manager = LoginManager()
@@ -15,11 +21,11 @@ def load_user(id: int):
         return None
 
     return SessionUser(
-        user.get('id', 0),
-        user.get('username', ''),
-        user.get('first_name', ''),
-        user.get('last_name', ''),
-        user.get('email', '')
+        user.id.user_id,
+        user.user_name,
+        user.first_name,
+        user.last_name,
+        user.email
     )
 
 @auth.route('/auth/login', methods=['POST'])
@@ -38,11 +44,11 @@ def login():
         user = auth_service.get_user_by_name(user_name)
 
         new_session_user = SessionUser(
-            user.get('id', 0),
-            user.get('username', ''),
-            user.get('first_name', ''),
-            user.get('last_name', ''),
-            user.get('email', '')
+            user.id.user_id,
+            user.user_name,
+            user.first_name,
+            user.last_name,
+            user.email
         )
 
         login_user(new_session_user, False, None, False, True)
@@ -80,14 +86,14 @@ def register():
 
         auth_service.register(user_name, pass_word, first_name, last_name, email, balance)
 
-        new_user = auth_service.get_user_by_name(user_name)
+        user = auth_service.get_user_by_name(user_name)
 
         new_session_user = SessionUser(
-            new_user.get('id', 0),
-            new_user.get('username', ''),
-            new_user.get('first_name', ''),
-            new_user.get('last_name', ''),
-            new_user.get('email', '')
+            user.id.user_id,
+            user.user_name,
+            user.first_name,
+            user.last_name,
+            user.email
         )
 
         login_user(new_session_user, False, None, False, True)

@@ -1,4 +1,5 @@
 **/.DS_Store
+.venv/
 server/.venv/
 **/bank_app.db
 **/bank_app.log

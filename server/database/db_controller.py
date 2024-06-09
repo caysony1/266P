@@ -382,7 +382,7 @@ class DBController:
 
         cursor = db_connect.cursor()
 
-        cursor.execute(sql_query_update_balance, (user_id, updated_balance))
+        cursor.execute(sql_query_update_balance, (updated_balance, user_id))
 
         db_connect.commit()
 

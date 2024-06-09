@@ -2,32 +2,43 @@ from flask_login import LoginManager
 from models.register_user import RegisterUser
 from database.db_controller import DBController
 import logging
-import datetime
+from models.user import User
+from models.user_id import UserId
 
 '''
 Changelog: (FIX PHASE)
-
+    06/09/24 - Updated service to use better data integrity models
     06/06/24 - Logger no longer reveals personal or sensitive info.
 
 '''
 
-
-# preliminary material. subject to change
 class AuthService:
     def __init__(self):
         pass
 
-    def get_user(self, user_id: int):
+    def get_user(self, user_id: int) -> User:
         dbc = DBController()
-        user = dbc.get_user_by_user_id(user_id)
-        return user
+        user_info = dbc.get_user_by_user_id(user_id)
+        return User(
+            user_info.get('id'),
+            user_info.get('username'),
+            user_info.get('first_name'),
+            user_info.get('last_name'),
+            user_info.get('email')
+        )
 
-    def get_user_by_name(self, user_name: str):
+    def get_user_by_name(self, user_name: str) -> User:
         dbc = DBController()
-        user = dbc.get_user_by_username(user_name)
-        return user
+        user_info = dbc.get_user_by_username(user_name)
+        return User(
+            user_info.get('id'),
+            user_info.get('username'),
+            user_info.get('first_name'),
+            user_info.get('last_name'),
+            user_info.get('email')
+        )
 
-    def user_exists(self, user_name):
+    def user_exists(self, user_name)-> bool:
         dbc = DBController()
         existing_user = dbc.get_user_by_username(user_name)
         return existing_user is not None
@@ -41,7 +52,7 @@ class AuthService:
 
         return existing_user.get('password') == password
 
-    def register(self, user_name, password, first_name, last_name, email, account_balance):
+    def register(self, user_name, password, first_name, last_name, email, account_balance) -> None:
         """
         Add new user and account to bank database.
 
@@ -63,13 +74,18 @@ class AuthService:
         dbc = DBController()
 
         logger = logging.getLogger()
-        logger.info("AuthService - Registering new user: " + new_user.get_user_name() + " - Adding to database...")
+        logger.info(f"AuthService - Registering new user: {new_user.user_name} - Adding to database...")
 
-        dbc.insert_user(new_user.get_user_name(), new_user.get_password(), new_user.get_first_name(),
-                        new_user.get_last_name(), new_user.get_email())
+        dbc.insert_user(
+            new_user.user_name, 
+            new_user.password, 
+            new_user.first_name,
+            new_user.last_name, 
+            new_user.email
+        )
 
-        get_user_id = dbc.get_user_by_username(new_user.get_user_name()).get('id')
+        user_id = dbc.get_user_by_username(new_user.user_name).get('id')
 
-        logger.info(f"AuthService - Adding new account for user id: {get_user_id} - Adding to database...")
+        logger.info(f"AuthService - Adding new account for user id: {user_id} - Adding to database...")
 
-        dbc.insert_account(get_user_id, account_balance)
+        dbc.insert_account(user_id, account_balance)
