@@ -1,7 +1,8 @@
-# to ensure that an attribute can not longer be set after it 
-# is set initially
-
 class Final:
+    """
+    Class to ensure that an attribute can no longer be set after it is set initially.
+    """
+
     def __get__(self, instance, owner):
         if instance is None:
             return self
