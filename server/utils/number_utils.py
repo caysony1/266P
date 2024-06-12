@@ -16,7 +16,7 @@ def is_positive(input_value):
     Returns:
         input_value
     """
-    if input_value is not None and input_value < 0:
+    if input_value is not None and (not isinstance(input_value, (float, int)) or input_value < 0):
         raise ValueError('input number is not positive!')
     else:
         return input_value
@@ -24,5 +24,8 @@ def is_positive(input_value):
 # using StackOverflow answer from here to ensure that proper currency rounding
 # is performed: https://stackoverflow.com/a/13463634
 def round_currency(value):
-    rounded_value = Decimal(value).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    try:
+        rounded_value = Decimal(value).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    except Exception:
+        raise ValueError('Invalid input for rounding.')
     return float(rounded_value)
