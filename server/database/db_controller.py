@@ -347,8 +347,10 @@ class DBController:
 
         sql_query_insert_account = "INSERT INTO Account (id, user_id, balance) VALUES (NULL, ?, ?);"
 
+        get_username = self.get_user_by_user_id(user_id).get('username')
+
         logger = logging.getLogger()
-        logger.info(f"Database - Inserting new account: user_id: {user_id}")
+        logger.info(f"Database - Inserting new account for {get_username}")
 
         db_connect = sqlite3.connect(self.db_path)
 
@@ -375,8 +377,10 @@ class DBController:
 
         sql_query_update_balance = "UPDATE Account SET balance = ? WHERE id = ?;"
 
+        get_username = self.get_user_by_user_id(user_id).get('username')
+
         logger = logging.getLogger()
-        logger.info(f"Database - Updating balance for: {user_id}")
+        logger.info(f"Database - Updating balance for: {get_username}")
 
         db_connect = sqlite3.connect(self.db_path)
 
