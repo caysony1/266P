@@ -23,10 +23,19 @@ function Register() {
         return regex.test(input) && parseFloat(input) >= 0 && parseFloat(input) <= 4294967295.99;
     }
 
+    const isValidEmail = (input) => {
+        const regex = /^[a-zA-Z0-9@.]+$/;
+        return regex.test(input);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const tempInvalids = {};
+
+        if (!isValidEmail(email)) {
+            tempInvalids.email = true;
+        }
 
         if (!isValid(firstName)) {
             tempInvalids.fname = true;
@@ -103,6 +112,7 @@ function Register() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    <p style={{ color: "red", marginLeft: "5px" }}>{invalids.email ? "Invalid Input" : ""}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
                     <label style={{ marginRight: "10px", width: "80px" }}>Username: </label>
